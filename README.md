@@ -5,15 +5,17 @@
 
 ### Technicalities:
 
-- In terms of functionality, the user will be able to see the type of dish that they might like to eat (American, Asian, etc...) and then select that dish for steps on how to cook it.
+- In terms of functionality, the ==user== will be able to see the type of dish that they might like to eat (American, Asian, etc...) and then select that dish for steps on how to cook it.
 
 - They will be able to find a dish based on how many calories they will want to consume.
 
-- The user will be able to get a list of required equipment once they find a recipe that they like.
+- The user will be able to get a list of required ==equipment== once they find a ==recipe== that they like.
 
-- A list of ingredients will also be provided to the user when they find a recipe.
+- A list of ==ingredients== will also be provided to the user when they find a recipe.
 
-- The user should be able to save their favorite recipes as well.
+- The user should be able to <u>save their favorite</u> recipes as well.
+
+- Users will be able to connect with other users and see their ==location== by <u>following their profile</u>.
 
 - As a stretch goal, users will be able to type in their ingredients and see a list of recipes that can be cooked right now.
 
@@ -22,4 +24,8 @@
 ### API:
 
 - [Spoonacular API](https://spoonacular.com/food-api)
+
+### Schema:
+
+![Database schema](QuickDBD-export.png)
 
