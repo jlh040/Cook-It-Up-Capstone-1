@@ -7,7 +7,7 @@
 
 - In terms of functionality, the user will be able to see the type of dish that they might like to eat (American, Asian, etc...) and then select that dish for steps on how to cook it.
 
-- They will be able to find a dish based on how many calories they will want to consume.
+- Users will be able to find a dish based on how many calories they will want to consume.
 
 - The user will be able to get a list of required equipment once they find a recipe that they like.
 
