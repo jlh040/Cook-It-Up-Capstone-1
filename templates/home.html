@@ -5,5 +5,14 @@ Cook It Up. Find Your Inner Chef
 {% endblock %}
 
 {% block content %}
-<h1>Find a dish.</h1>
+<form action="">
+    <label for="recipe-search">Find a dish: </label>
+    <input id ="recipe-search" type="text">
+    <button>Search</button>
+</form>
+<div class="cuisine-container">
+    {% for cuisine in cuisines %}
+    <p><a href="#">{{ cuisine }}</a></p>
+    {% endfor %}
+</div>
 {% endblock %}

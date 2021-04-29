@@ -33,9 +33,9 @@ def add_user_to_global():
 def show_homepage():
     """Show the site's homepage."""
 
-    if g.user:
+    if g.user or True:
         # If a user is logged in take them to the main homepage
-        return render_template('home.html')
+        return render_template('home.html', cuisines=Recipe.all_cuisines())
     else:
         # Otherwise take them to the anonymous homepage
         return render_template('home_anon.html')
