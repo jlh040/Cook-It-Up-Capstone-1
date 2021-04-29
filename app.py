@@ -19,3 +19,12 @@ app.config['SECRET_KEY'] = SECRET_KEY
 debug = DebugToolbarExtension(app)
 
 connect_db(app)
+
+@app.before_request
+def add_user_to_global():
+    """If a user is logged in, put them in the g object."""
+
+    if session[CURR_USER_KEY]:
+        g.user = User.query.get(session[CURR_USER_KEY])
+    else:
+        g.user = None
