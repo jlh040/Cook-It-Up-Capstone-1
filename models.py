@@ -20,6 +20,10 @@ class User(db.Model):
 
     favorite_recipes = db.relationship('Recipe', secondary = 'UserRecipe')
 
+    def __repr__(self):
+        """Create a representation of the user."""
+        return f'<User: {self.username} id: {self.id}>'
+
 class UserRecipe(db.Model):
     """Associates users and their favorite recipes."""
 
