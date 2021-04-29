@@ -18,7 +18,7 @@ class User(db.model):
     image_url = db.Column(db.Text, default = 'https://tinyurl.com/profile-default-image')
     email = db.Column(db.Text, nullable = False)
 
-    favorite_recipes = db.relationship('Recipe', secondary = 'UsersRecipes')
+    favorite_recipes = db.relationship('Recipe', secondary = 'UserRecipe')
 
 class UserRecipe(db.Model):
     """Associates users and their favorite recipes."""
