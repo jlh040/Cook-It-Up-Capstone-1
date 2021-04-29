@@ -45,12 +45,12 @@ class User(db.Model):
     email = db.Column(
         db.Text,
         unique = True,
-        nullable = False,
+        nullable = False
     )
 
     favorite_recipes = db.relationship(
         'Recipe', 
-        secondary = 'UserRecipe'
+        secondary = 'users_recipes'
     )
 
     def __repr__(self):
