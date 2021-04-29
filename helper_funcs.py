@@ -13,14 +13,20 @@ def make_additional_calls(resp, list_of_recipe_titles, cuisine_name):
 
     if resp.json()['totalResults'] > 100:
         for num in range(num_of_addtl_calls):
-            addtl_resp = requests.get(api_endpoint, params = {
-            'cuisine': cuisine_name,
-            'apiKey': API_KEY,
-            'number': 100,
-            'offset': offset
-            })
+            addtl_resp = make_request(api_endpoint, cuisine_name, offset)
             offset += 100
             list_of_recipe_titles.extend([(obj['id'], obj['title']) for obj in addtl_resp.json()['results']])
         return list_of_recipe_titles
     else:
         return list_of_recipe_titles
+
+def make_request(api_endpoint, cuisine_name, offset):
+    """Make a request to the API."""
+    addtl_resp = requests.get(api_endpoint, params = {
+            'cuisine': cuisine_name,
+            'apiKey': API_KEY,
+            'number': 100,
+            'offset': offset
+            })
+    return addtl_resp
+
