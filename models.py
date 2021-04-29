@@ -1,4 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
+from secret_keys import API_KEY
+from helper_funcs import make_additional_calls
+import requests
 
 db = SQLAlchemy()
 
@@ -131,5 +134,26 @@ class Recipe(db.Model):
             'Vietnamese'
         ]
         return list_of_cuisines
+    
+    @classmethod
+    def get_recipes_by_cuisine(self, cuisine_name):
+        """Search for a list of recipes by cuisine name."""
+        api_endpoint = 'https://api.spoonacular.com/recipes/complexSearch'
+
+        resp = requests.get(api_endpoint, params = {
+            'cuisine': cuisine_name,
+            'apiKey': API_KEY,
+            'number': 100
+        })
+        list_of_recipe_titles = [(dictt['id'], dictt['title']) for dictt in resp.json()['results']]
+        list_of_recipe_titles = make_additional_calls(resp, list_of_recipe_titles, cuisine_name)
+
+        return list_of_recipe_titles
+
+
+        
+
+
+
 
     

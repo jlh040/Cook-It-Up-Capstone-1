@@ -52,7 +52,9 @@ def show_recipes():
     else:
         return render_template('recipe-list.html')
 
-@app.route('/recipes/<cuisine>', methods=['GET'])
-def show_recipes_by_cuisine(cuisine):
+@app.route('/recipes/cuisines/<cuisine_type>', methods=['GET'])
+def show_recipes_by_cuisine(cuisine_type):
     """Show recipes by their cuisine type."""
-    return render_template('cuisine-page.html', cuisine=cuisine)
+    recipes_by_cuisine = Recipe.get_recipes_by_cuisine(cuisine_type)
+
+    return render_template('cuisine-page.html', recipes=recipes_by_cuisine, cuisine=cuisine_type)
