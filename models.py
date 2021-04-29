@@ -20,10 +20,10 @@ class User(db.model):
 
     favorite_recipes = db.relationship('Recipe', secondary = 'UsersRecipes')
 
-class UsersRecipes(db.Model):
+class UserRecipe(db.Model):
     """Associates users and their favorite recipes."""
 
-    __tablename__ = 'favorite_recipes'
+    __tablename__ = 'users_recipes'
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
