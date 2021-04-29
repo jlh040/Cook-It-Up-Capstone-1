@@ -38,8 +38,9 @@ class User(db.Model):
     )
 
     email = db.Column(
-        db.Text, 
-        nullable = False
+        db.Text,
+        unique = True,
+        nullable = False,
     )
 
     favorite_recipes = db.relationship(
@@ -82,7 +83,7 @@ class Recipe(db.Model):
         autoincrement = True, 
         primary_key = True
     )
-    
+
     api_id = db.Column(
         db.Integer, 
         unique = True, 
