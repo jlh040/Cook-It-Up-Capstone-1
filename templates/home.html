@@ -12,7 +12,9 @@ Cook It Up. Find Your Inner Chef
 </form>
 <div class="cuisine-container">
     {% for cuisine in cuisines %}
-        <p><a href="/recipes/{{ cuisine }}">{{ cuisine }}</a></p>
+        <p><a href="{{ url_for('show_recipes_by_cuisine', cuisine=cuisine) }}">{{ cuisine }}</a></p>
     {% endfor %}
 </div>
 {% endblock %}
+
+/recipes/{{ cuisine }}
