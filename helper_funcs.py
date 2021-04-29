@@ -4,7 +4,7 @@ import requests
 
 def make_additional_calls(resp, list_of_recipe_titles, cuisine_name):
     """Make additional calls if
-    number of calls was > 100.
+    number of recipe results is > 100.
     """
     api_endpoint = 'https://api.spoonacular.com/recipes/complexSearch'
     total_num_of_recipes = resp.json()['totalResults']
