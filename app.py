@@ -31,7 +31,7 @@ def add_user_to_global():
         # Otherwise, do not put any user in the g object
         g.user = None
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def show_homepage():
     """Show the site's homepage."""
 
@@ -41,3 +41,8 @@ def show_homepage():
     else:
         # Otherwise take them to the anonymous homepage
         return render_template('home_anon.html')
+
+@app.route('/recipes/<cuisine>', methods=['GET'])
+def show_recipes_by_cuisine(cuisine):
+    """Show recipes by their cuisine type."""
+    return render_template('cuisine-page.html', cuisine=cuisine)
