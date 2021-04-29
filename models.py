@@ -11,14 +11,41 @@ class User(db.Model):
 
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer, autoincrement= True, primary_key = True)
-    username = db.Column(db.String(25), unique = True, nullable = False)
-    first_name = db.Column(db.String(20), nullable = False)
-    last_name = db.Column(db.String(20))
-    image_url = db.Column(db.Text, default = 'https://tinyurl.com/profile-default-image')
-    email = db.Column(db.Text, nullable = False)
+    id = db.Column(
+        db.Integer, 
+        autoincrement= True, 
+        primary_key = True
+    )
 
-    favorite_recipes = db.relationship('Recipe', secondary = 'UserRecipe')
+    username = db.Column(
+        db.String(25), 
+        unique = True, 
+        nullable = False
+    )
+
+    first_name = db.Column(
+        db.String(20), 
+        nullable = False
+    )
+
+    last_name = db.Column(
+        db.String(20)
+    )
+
+    image_url = db.Column(
+        db.Text, 
+        default = 'https://tinyurl.com/profile-default-image'
+    )
+
+    email = db.Column(
+        db.Text, 
+        nullable = False
+    )
+
+    favorite_recipes = db.relationship(
+        'Recipe', 
+        secondary = 'UserRecipe'
+    )
 
     def __repr__(self):
         """Create a representation of the user."""
@@ -29,16 +56,37 @@ class UserRecipe(db.Model):
 
     __tablename__ = 'users_recipes'
 
-    id = db.Column(db.Integer, autoincrement = True, primary_key = True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
+    id = db.Column(
+        db.Integer, 
+        autoincrement = True, 
+        primary_key = True
+    )
+
+    user_id = db.Column(
+        db.Integer, 
+        db.ForeignKey('users.id')
+    )
+
+    recipe_id = db.Column(
+        db.Integer, 
+        db.ForeignKey('recipes.id')
+    )
 
 class Recipe(db.Model):
     """Represents a recipe in the database."""
 
     __tablename__ = 'recipes'
 
-    id = db.Column(db.Integer, autoincrement = True, primary_key = True)
-    api_id = db.Column(db.Integer, unique = True, nullable = False)
+    id = db.Column(
+        db.Integer, 
+        autoincrement = True, 
+        primary_key = True
+    )
+    
+    api_id = db.Column(
+        db.Integer, 
+        unique = True, 
+        nullable = False
+    )
 
     
