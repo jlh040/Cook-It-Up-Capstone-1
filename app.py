@@ -28,3 +28,8 @@ def add_user_to_global():
         g.user = User.query.get(session[CURR_USER_KEY])
     else:
         g.user = None
+
+@app.route('/')
+def show_homepage():
+    """Show the site's homepage."""
+    return render_template('home.html')
