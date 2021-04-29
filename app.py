@@ -1,4 +1,4 @@
-from flask import Flask, session, g, flash, render_template, redirect
+from flask import Flask, session, g, flash, render_template, redirect, request
 from models import db, connect_db, User, Recipe
 from flask_debugtoolbar import DebugToolbarExtension
 from secret_keys import API_KEY, SECRET_KEY
@@ -41,6 +41,16 @@ def show_homepage():
     else:
         # Otherwise take them to the anonymous homepage
         return render_template('home_anon.html')
+
+@app.route('/recipes')
+def show_recipes():
+    """Show a list of recipes."""
+    recipe_query = request.args.get('recipe')
+
+    if recipe_query:
+        return render_template('recipe-list.html', recipe_query=recipe_query)
+    else:
+        return render_template('recipe-list.html')
 
 @app.route('/recipes/<cuisine>', methods=['GET'])
 def show_recipes_by_cuisine(cuisine):

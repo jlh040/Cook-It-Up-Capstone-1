@@ -5,9 +5,9 @@ Cook It Up. Find Your Inner Chef
 {% endblock %}
 
 {% block content %}
-<form action="">
+<form action="/recipes">
     <label for="recipe-search">Find a dish: </label>
-    <input id ="recipe-search" type="text">
+    <input id ="recipe-search" type="text" placeholder="Recipe Name" name="recipe">
     <button>Search</button>
 </form>
 <div class="cuisine-container">
@@ -16,5 +16,3 @@ Cook It Up. Find Your Inner Chef
     {% endfor %}
 </div>
 {% endblock %}
-
-/recipes/{{ cuisine }}
