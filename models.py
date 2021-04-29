@@ -22,6 +22,11 @@ class User(db.Model):
         unique = True, 
         nullable = False
     )
+    
+    password = db.Column(
+        db.Text,
+        nullable = False
+    )
 
     first_name = db.Column(
         db.String(20), 
