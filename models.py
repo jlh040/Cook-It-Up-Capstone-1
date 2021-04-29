@@ -55,7 +55,7 @@ class User(db.Model):
 
     def __repr__(self):
         """Create a representation of the user."""
-        return f'<User: {self.username} id: {self.id}>'
+        return f'<User: {self.username}, id: {self.id}>'
 
 class UserRecipe(db.Model):
     """Associates users and their favorite recipes."""
@@ -94,5 +94,42 @@ class Recipe(db.Model):
         unique = True, 
         nullable = False
     )
+
+    def __repr__(self):
+        """Create a representation of a recipe."""
+        return f'<id: {self.id}, api_id: {self.api_id}>'
+
+    @classmethod
+    def all_cuisines(cls):
+        """Return a list of all cuisines."""
+        list_of_cuisines = [
+            'African',
+            'American',
+            'British',
+            'Cajun',
+            'Caribbean',
+            'Chinese',
+            'Eastern European',
+            'European',
+            'French',
+            'German',
+            'Greek',
+            'Indian',
+            'Irish',
+            'Italian',
+            'Japanese',
+            'Jewish',
+            'Korean',
+            'Latin American',
+            'Mediterranean',
+            'Mexican',
+            'Middle Eastern',
+            'Nordic',
+            'Southern',
+            'Spanish',
+            'Thai',
+            'Vietnamese'
+        ]
+        return list_of_cuisines
 
     

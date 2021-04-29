@@ -32,4 +32,10 @@ def add_user_to_global():
 @app.route('/')
 def show_homepage():
     """Show the site's homepage."""
-    return render_template('home.html')
+
+    if g.user:
+        # If a user is logged in take them to the main homepage
+        return render_template('home.html')
+    else:
+        # Otherwise take them to the anonymous homepage
+        return render_template('home_anon.html')
