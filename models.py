@@ -6,7 +6,7 @@ def connect_db(app):
     db.app = app
     db.init_app(app)
 
-class User(db.model):
+class User(db.Model):
     """Represents a user in the database."""
 
     __tablename__ = 'users'
@@ -25,6 +25,7 @@ class UserRecipe(db.Model):
 
     __tablename__ = 'users_recipes'
 
+    id = db.Column(db.Integer, autoincrement = True, primary_key = True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
 

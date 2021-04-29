@@ -1,5 +1,5 @@
 from flask import Flask, session, g, flash, render_template, redirect
-from models import db, connect_db
+from models import db, connect_db, User, Recipe
 from flask_debugtoolbar import DebugToolbarExtension
 from secret_keys import API_KEY, SECRET_KEY
 
