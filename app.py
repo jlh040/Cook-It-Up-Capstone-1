@@ -22,11 +22,13 @@ connect_db(app)
 
 @app.before_request
 def add_user_to_global():
-    """If a user is logged in, put them in the g object."""
+    """Add user to the g object."""
 
     if session.get(CURR_USER_KEY):
+        # If the user's id is in the session, put them in the g object
         g.user = User.query.get(session[CURR_USER_KEY])
     else:
+        # Otherwise, do not put any user in the g object
         g.user = None
 
 @app.route('/')
