@@ -24,7 +24,7 @@ connect_db(app)
 def add_user_to_global():
     """If a user is logged in, put them in the g object."""
 
-    if session[CURR_USER_KEY]:
+    if session.get(CURR_USER_KEY):
         g.user = User.query.get(session[CURR_USER_KEY])
     else:
         g.user = None
