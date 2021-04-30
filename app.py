@@ -51,16 +51,3 @@ def show_recipes():
         return redirect(f'/recipes/query/<{recipe_query}>')
     else:
         return render_template('all-recipe-page.html')
-
-@app.route('/recipes/query/<query>')
-def show_recipe_by_letter():
-    """Show a list of recipes that start with a certain letter."""
-
-    return render_template('/recipe-list')
-
-@app.route('/recipes/cuisines/<cuisine_type>', methods=['GET'])
-def show_recipes_by_cuisine(cuisine_type):
-    """Show recipes by their cuisine type."""
-    recipes_by_cuisine = Recipe.get_recipes_by_cuisine(cuisine_type)
-
-    return render_template('cuisine-page.html', recipes=recipes_by_cuisine, cuisine=cuisine_type)
