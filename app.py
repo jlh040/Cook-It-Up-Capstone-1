@@ -72,7 +72,11 @@ def show_recipe_by_id(id):
     # Get the equipement
     recipe_equip = Recipe.get_equipment_for_recipe(id)['equipment']
 
+    # Get the instructions
+    recipt_inst = Recipe.get_instructions_for_recipe(id)
+
     return render_template('single_recipe.html',
                              recipe_info=recipe_info,
-                             recipe_equip=recipe_equip)
+                             recipe_equip=recipe_equip,
+                             recipe_inst=recipt_inst)
     

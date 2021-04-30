@@ -167,8 +167,10 @@ class Recipe(db.Model):
         })
 
         list_of_instructions = [
-            (obj['number'], obj['step']) for obj in resp.json()[0]
+            (obj['number'], obj['step']) for obj in resp.json()[0]['steps']
         ]
+
+        return list_of_instructions
 
 
     

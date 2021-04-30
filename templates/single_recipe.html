@@ -27,4 +27,11 @@
 </ul>
 
 <h2>Instructions:</h2>
+<ul>
+    {% for num, step in recipe_inst %}
+    <li>
+        {{ num }} {{ step }}
+    </li>
+    {% endfor %}
+</ul>
 {% endblock %}
