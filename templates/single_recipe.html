@@ -6,7 +6,11 @@
 
 {% block content %}
 <img src="{{ recipe[1] }}" alt="">
+<h1>{{ recipe[0] }}</h1>
+<h2>Ingredients:</h2>
 {% for ingred in recipe[2] %}
     <p>{{ ingred }}</p>
 {% endfor %}
+<h2>Equipment:</h2>
+<h2>Instructions:</h2>
 {% endblock %}

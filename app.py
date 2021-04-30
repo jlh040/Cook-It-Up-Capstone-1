@@ -46,6 +46,7 @@ def show_homepage():
 def list_recipes_by_cuisine(cuisine_type):
     """Show a list of recipes by cuisine type."""
     recipes = Recipe.get_recipes_by_cuisine(cuisine_type)
+    recipes.sort(key=lambda x: x[1])
 
     return render_template('recipes_by_cuisine.html', recipes=recipes, cuisine_type=cuisine_type)
 
@@ -54,8 +55,9 @@ def list_recipes_by_query():
     """List all recipes based upon a search query."""
     # Get the query param from the url
     query = request.args['query']
-    # Get all recipes found from that query
+    # Get all recipes found from that query and then sort
     recipes = Recipe.get_recipes_by_query(query)
+    recipes.sort(key=lambda x: x[1])
 
     # Pass the recipes into the template to display to the user
     return render_template('recipes_by_query.html', recipes=recipes)
@@ -65,4 +67,7 @@ def show_recipe_by_id(id):
     """Show a recipe."""
     recipe = Recipe.get_single_recipe(id)
     return render_template('single_recipe.html', recipe=recipe)
+
+def take_second(tuple):
+    return tuple[1]
     
