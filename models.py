@@ -101,39 +101,6 @@ class Recipe(db.Model):
     def __repr__(self):
         """Create a representation of a recipe."""
         return f'<id: {self.id}, api_id: {self.api_id}>'
-
-    @classmethod
-    def all_cuisines(cls):
-        """Return a list of all cuisines."""
-        list_of_cuisines = [
-            'African',
-            'American',
-            'British',
-            'Cajun',
-            'Caribbean',
-            'Chinese',
-            'Eastern European',
-            'European',
-            'French',
-            'German',
-            'Greek',
-            'Indian',
-            'Irish',
-            'Italian',
-            'Japanese',
-            'Jewish',
-            'Korean',
-            'Latin American',
-            'Mediterranean',
-            'Mexican',
-            'Middle Eastern',
-            'Nordic',
-            'Southern',
-            'Spanish',
-            'Thai',
-            'Vietnamese'
-        ]
-        return list_of_cuisines
     
     @classmethod
     def get_recipes_by_cuisine(cls, cuisine_name):
@@ -184,7 +151,7 @@ class Recipe(db.Model):
         """Get a recipe's equipment."""
         api_endpoint = f'https://api.spoonacular.com/recipes/{id}/equipmentWidget.json'
 
-        resp = requests.get(api_endpoint, params={'apiKey': API_KEY} )
+        resp = requests.get(api_endpoint, params={'apiKey': API_KEY})
 
         return resp.json()
         
