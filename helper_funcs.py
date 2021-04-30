@@ -30,3 +30,9 @@ def make_request(api_endpoint, cuisine_name, offset):
             })
     return addtl_resp
 
+def get_upper_alphabet():
+    lower_alphabet = list('abcdefghijklmnopqrstuvwxyz')
+    upper_alphabet = [ltr.upper() for ltr in lower_alphabet]
+
+    return upper_alphabet
+
