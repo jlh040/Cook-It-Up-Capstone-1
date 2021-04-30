@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 
 {% block page_title %}
-    {{ recipe[0] }}
+    {{ recipe_info[0] }}
 {% endblock %}
 
 {% block content %}
-<img src="{{ recipe[1] }}" alt="">
-<h1>{{ recipe[0] }}</h1>
+<img src="{{ recipe_info[1] }}" alt="">
+<h1>{{ recipe_info[0] }}</h1>
 
 <h2>Ingredients:</h2>
 <ul>
-{% for ingred in recipe[2] %}
+{% for ingred in recipe_info[2] %}
     <li>
         {{ ingred }}
     </li>
@@ -18,5 +18,13 @@
 </ul>
 
 <h2>Equipment:</h2>
+<ul>
+    {% for tool in recipe_equip %}
+        <li>
+            {{ tool['name'].capitalize() }}
+        </li>
+    {% endfor %}
+</ul>
+
 <h2>Instructions:</h2>
 {% endblock %}

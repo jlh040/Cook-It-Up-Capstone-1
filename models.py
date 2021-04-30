@@ -171,9 +171,7 @@ class Recipe(db.Model):
         """Return a recipe's info by id."""
         api_endpoint = f'https://api.spoonacular.com/recipes/{id}/information'
 
-        resp = requests.get(api_endpoint, params = {
-            'apiKey': API_KEY
-        })
+        resp = requests.get(api_endpoint, params = {'apiKey': API_KEY})
 
         title = resp.json()['title']
         image_url = resp.json().get('image', 'https://tinyurl.com/ymxdeb5y')
@@ -184,6 +182,11 @@ class Recipe(db.Model):
     @classmethod
     def get_equipment_for_recipe(cls, id):
         """Get a recipe's equipment."""
+        api_endpoint = f'https://api.spoonacular.com/recipes/{id}/equipmentWidget.json'
+
+        resp = requests.get(api_endpoint, params={'apiKey': API_KEY} )
+
+        return resp.json()
         
 
 
