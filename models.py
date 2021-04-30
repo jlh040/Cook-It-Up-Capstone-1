@@ -110,7 +110,8 @@ class Recipe(db.Model):
         resp = requests.get(api_endpoint, params = {
             'cuisine': cuisine_name,
             'apiKey': API_KEY,
-            'number': 100
+            'number': 100,
+            'instructionsRequired': True
         })
         list_of_recipe_titles = [(dictt['id'], dictt['title']) for dictt in resp.json()['results']]
         list_of_recipe_titles = make_additional_calls(resp, list_of_recipe_titles, cuisine_name=cuisine_name)
@@ -125,7 +126,8 @@ class Recipe(db.Model):
         resp = requests.get(api_endpoint, params = {
             'query': query,
             'apiKey': API_KEY,
-            'number': 100
+            'number': 100,
+            'instructionsRequired': True
         })
 
         list_of_recipe_titles = [(dictt['id'], dictt['title']) for dictt in resp.json()['results']]
@@ -135,7 +137,7 @@ class Recipe(db.Model):
     
     @classmethod
     def get_recipe_info(cls, id):
-        """Return a recipe's info by id."""
+        """Return a recipe's meta-info by id."""
         api_endpoint = f'https://api.spoonacular.com/recipes/{id}/information'
 
         resp = requests.get(api_endpoint, params = {'apiKey': API_KEY})
@@ -154,7 +156,23 @@ class Recipe(db.Model):
         resp = requests.get(api_endpoint, params={'apiKey': API_KEY})
 
         return resp.json()
-        
+    
+    @classmethod
+    def get_instructions_for_recipe(cls, id):
+        """Get a recipe's instructions."""
+        api_endpoint = f'https://api.spoonacular.com/recipes/{id}/analyzedInstructions'
+
+        resp = requests.get(api_endpoint, params = {
+            'apiKey': API_KEY,
+        })
+
+        list_of_instructions = [
+            (obj['number'], obj['step']) for obj in resp.json()[0]
+        ]
+
+
+    
+
 
 
 
