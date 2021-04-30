@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    {{ recipe[0] }}
+{% endblock %}
+
+{% block content %}
+<img src="{{ recipe[1] }}" alt="">
+{% for ingred in recipe[2] %}
+    <p>{{ ingred }}</p>
+{% endfor %}
+{% endblock %}

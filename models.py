@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from secret_keys import API_KEY
-from helper_funcs import make_additional_calls
+from helper_funcs import make_additional_calls, get_ingredients_from_recipe
 import requests
 
 db = SQLAlchemy()
@@ -165,6 +165,22 @@ class Recipe(db.Model):
         list_of_recipe_titles = make_additional_calls(resp, list_of_recipe_titles, query=query)
 
         return list_of_recipe_titles
+    
+    @classmethod
+    def get_single_recipe(cls, id):
+        """Return a recipe's info by id."""
+        api_endpoint = f'https://api.spoonacular.com/recipes/{id}/information'
+
+        resp = requests.get(api_endpoint, params = {
+            'apiKey': API_KEY
+        })
+
+        title = resp.json()['title']
+        image_url = resp.json()['image']
+        ingredients = get_ingredients_from_recipe(resp)
+
+        return (title, image_url, ingredients)
+
 
 
 

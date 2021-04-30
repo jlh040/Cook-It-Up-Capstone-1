@@ -59,4 +59,10 @@ def list_recipes_by_query():
 
     # Pass the recipes into the template to display to the user
     return render_template('recipes_by_query.html', recipes=recipes)
+
+@app.route('/recipes/<int:id>', methods=['GET'])
+def show_recipe_by_id(id):
+    """Show a recipe."""
+    recipe = Recipe.get_single_recipe(id)
+    return render_template('single_recipe.html', recipe=recipe)
     

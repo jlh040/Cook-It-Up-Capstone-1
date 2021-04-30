@@ -49,3 +49,11 @@ def get_upper_alphabet():
 
     return upper_alphabet
 
+def get_ingredients_from_recipe(resp):
+    """Get a list of ingredients from a recipe."""
+    list_of_ingredients = []
+    for ingred in resp.json()['extendedIngredients']:
+        list_of_ingredients.append(ingred['original'].capitalize())
+    
+    return list_of_ingredients
+
