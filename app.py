@@ -42,12 +42,10 @@ def show_homepage():
         # Otherwise take them to the anonymous homepage
         return render_template('home_anon.html')
 
-@app.route('/recipes')
-def show_recipes():
-    """Show a list of recipes."""
-    recipe_query = request.args.get('recipe')
+@app.route('/cuisines/<cuisine_type>')
+def list_recipes_by_cuisine(cuisine_type):
+    """Show a list of recipes by cuisine type."""
+    recipes = Recipe.get_recipes_by_cuisine(cuisine_type)
 
-    if recipe_query:
-        return redirect(f'/recipes/query/<{recipe_query}>')
-    else:
-        return render_template('all-recipe-page.html')
+    return render_template('recipes_by_cuisine.html', recipes=recipes, cuisine_type=cuisine_type)
+    
