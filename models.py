@@ -176,7 +176,7 @@ class Recipe(db.Model):
         })
 
         title = resp.json()['title']
-        image_url = resp.json()['image']
+        image_url = resp.json().get('image', 'https://tinyurl.com/ymxdeb5y')
         ingredients = get_ingredients_from_recipe(resp)
 
         return (title, image_url, ingredients)
