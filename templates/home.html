@@ -5,9 +5,9 @@ Cook It Up. Find Your Inner Chef
 {% endblock %}
 
 {% block content %}
-<form action="/recipes">
-    <label for="recipe-search">Find a dish: </label>
-    <input id ="recipe-search" type="text" placeholder="Recipe Name" name="recipe">
+<form action="{{ url_for('list_recipes_by_query') }}">
+    <label for="recipe-search">Find a recipe: </label>
+    <input id ="recipe-search" type="text" placeholder="Recipe Name" name="query">
     <button>Search</button>
 </form>
 <div class="cuisine-container">

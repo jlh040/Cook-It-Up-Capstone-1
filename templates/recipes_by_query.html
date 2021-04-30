@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+Find a Dish!
+{% endblock %}
+
+{% block content %}
+    {% for id, recipe in recipes %}
+    <p data-api-id="{{ id }}">{{ recipe }}</p>
+    {% endfor %}
+{% endblock %}

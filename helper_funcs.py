@@ -2,7 +2,7 @@ from math import floor
 from secret_keys import API_KEY
 import requests
 
-def make_additional_calls(resp, list_of_recipe_titles, cuisine_name):
+def make_additional_calls(resp, list_of_recipe_titles, cuisine_name=None, query=None):
     """Make additional calls if
     number of recipe results is > 100.
     """
@@ -13,14 +13,27 @@ def make_additional_calls(resp, list_of_recipe_titles, cuisine_name):
 
     if resp.json()['totalResults'] > 100:
         for num in range(num_of_addtl_calls):
-            addtl_resp = make_request(api_endpoint, cuisine_name, offset)
+            if cuisine_name:
+                addtl_resp = make_request_by_cuisine(api_endpoint, cuisine_name, offset)
+            elif query:
+                addtl_resp = make_request_by_query(api_endpoint, query, offset)
             offset += 100
             list_of_recipe_titles.extend([(obj['id'], obj['title']) for obj in addtl_resp.json()['results']])
         return list_of_recipe_titles
     else:
         return list_of_recipe_titles
 
-def make_request(api_endpoint, cuisine_name, offset):
+def make_request_by_query(api_endpoint, query, offset):
+    """Make a request to the API."""
+    addtl_resp = requests.get(api_endpoint, params = {
+            'query': query,
+            'apiKey': API_KEY,
+            'number': 100,
+            'offset': offset
+            })
+    return addtl_resp
+
+def make_request_by_cuisine(api_endpoint, cuisine_name, offset):
     """Make a request to the API."""
     addtl_resp = requests.get(api_endpoint, params = {
             'cuisine': cuisine_name,
