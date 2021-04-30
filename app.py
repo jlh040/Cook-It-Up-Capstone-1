@@ -2,7 +2,7 @@ from flask import Flask, session, g, flash, render_template, redirect, request
 from models import db, connect_db, User, Recipe
 from flask_debugtoolbar import DebugToolbarExtension
 from secret_keys import API_KEY, SECRET_KEY
-from helper_funcs import all_cuisines
+from helper_funcs import list_of_cuisines
 
 import requests
 import os
@@ -38,7 +38,7 @@ def show_homepage():
 
     if g.user or True:
         # If a user is logged in take them to the main homepage
-        return render_template('home.html', cuisines=all_cuisines())
+        return render_template('home.html', cuisines=list_of_cuisines)
     else:
         # Otherwise take them to the anonymous homepage
         return render_template('home_anon.html')

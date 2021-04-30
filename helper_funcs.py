@@ -2,9 +2,7 @@ from math import floor
 from secret_keys import API_KEY
 import requests
 
-def all_cuisines():
-        """Return a list of all cuisines."""
-        list_of_cuisines = [
+list_of_cuisines = [
             'African',
             'American',
             'British',
@@ -31,9 +29,8 @@ def all_cuisines():
             'Spanish',
             'Thai',
             'Vietnamese'
-        ]
-        return list_of_cuisines
-
+            ]
+            
 def make_additional_calls(resp, list_of_recipe_titles, cuisine_name=None, query=None):
     """Make additional calls if
     number of recipe results is > 100.
