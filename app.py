@@ -52,8 +52,11 @@ def list_recipes_by_cuisine(cuisine_type):
 @app.route('/recipes', methods=['GET'])
 def list_recipes_by_query():
     """List all recipes based upon a search query."""
+    # Get the query param from the url
     query = request.args['query']
+    # Get all recipes found from that query
     recipes = Recipe.get_recipes_by_query(query)
 
+    # Pass the recipes into the template to display to the user
     return render_template('recipes_by_query.html', recipes=recipes)
     
