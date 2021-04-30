@@ -25,23 +25,23 @@ def make_additional_calls(resp, list_of_recipe_titles, cuisine_name=None, query=
 
 def make_request_by_query(api_endpoint, query, offset):
     """Make a request to the API."""
-    addtl_resp = requests.get(api_endpoint, params = {
+    resp = requests.get(api_endpoint, params = {
             'query': query,
             'apiKey': API_KEY,
             'number': 100,
             'offset': offset
             })
-    return addtl_resp
+    return resp
 
 def make_request_by_cuisine(api_endpoint, cuisine_name, offset):
     """Make a request to the API."""
-    addtl_resp = requests.get(api_endpoint, params = {
+    resp = requests.get(api_endpoint, params = {
             'cuisine': cuisine_name,
             'apiKey': API_KEY,
             'number': 100,
             'offset': offset
             })
-    return addtl_resp
+    return resp
 
 def get_upper_alphabet():
     lower_alphabet = list('abcdefghijklmnopqrstuvwxyz')

@@ -64,7 +64,7 @@ def list_recipes_by_query():
 
 @app.route('/recipes/<int:id>', methods=['GET'])
 def show_recipe_by_id(id):
-    """Show a recipe."""
-    recipe = Recipe.get_single_recipe(id)
+    """Show a recipe's nformation."""
+    recipe = Recipe.get_recipe_info(id)
     return render_template('single_recipe.html', recipe=recipe)
     

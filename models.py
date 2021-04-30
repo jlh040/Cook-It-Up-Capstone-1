@@ -167,7 +167,7 @@ class Recipe(db.Model):
         return list_of_recipe_titles
     
     @classmethod
-    def get_single_recipe(cls, id):
+    def get_recipe_info(cls, id):
         """Return a recipe's info by id."""
         api_endpoint = f'https://api.spoonacular.com/recipes/{id}/information'
 
@@ -180,6 +180,12 @@ class Recipe(db.Model):
         ingredients = get_ingredients_from_recipe(resp)
 
         return (title, image_url, ingredients)
+    
+    @classmethod
+    def get_equipment_for_recipe(cls, id):
+        """Get a recipe's equipment."""
+        
+
 
 
 
