@@ -6,6 +6,6 @@
 
 {% block content %}
     {% for id, recipe in recipes %}
-    <p>{{ recipe }}</p>
+    <p data-api-id="{{ id }}">{{ recipe }}</p>
     {% endfor %}
 {% endblock %}
