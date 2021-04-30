@@ -67,7 +67,4 @@ def show_recipe_by_id(id):
     """Show a recipe."""
     recipe = Recipe.get_single_recipe(id)
     return render_template('single_recipe.html', recipe=recipe)
-
-def take_second(tuple):
-    return tuple[1]
     
