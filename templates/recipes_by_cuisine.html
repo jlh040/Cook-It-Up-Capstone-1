@@ -6,6 +6,6 @@
 
 {% block content %}
     {% for id, recipe in recipes %}
-    <p data-api-id="{{ id }}">{{ recipe }}</p>
+    <p><a href="{{ url_for('show_recipe_by_id', id=id) }}">{{ recipe }}</a></p>
     {% endfor %}
 {% endblock %}
