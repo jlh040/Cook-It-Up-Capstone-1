@@ -1,5 +1,6 @@
 from flask import Flask, session, g, flash, render_template, redirect, request
 from models import db, connect_db, User, Recipe
+from forms import SignupForm
 from flask_debugtoolbar import DebugToolbarExtension
 from secret_keys import API_KEY, SECRET_KEY
 from helper_funcs import list_of_cuisines
@@ -85,5 +86,6 @@ def show_recipe_by_id(id):
 @app.route('/signup', methods=['GET', 'POST'])
 def user_signup():
     """Sign the user up."""
-    return render_template('signup.html')
+    form = SignupForm()
+    return render_template('signup.html', form=form)
     

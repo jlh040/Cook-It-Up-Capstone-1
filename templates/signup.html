@@ -5,23 +5,13 @@ Signup
 {% endblock %}
 
 {% block content %}
+<h1>Signup Page</h1>
 <form action="/signup" method='POST'>
-    <label for="username">Username</label>
-    <input id="username" type="text"></br>
+    {{ form.hidden_tag() }}
 
-    <label for="password">Password</label>
-    <input id="password" type="text"></br>
-
-    <label for="first-name">First Name</label>
-    <input id="first-name" type="text"></br>
-
-    <label for="last-name">Last Name</label>
-    <input id="last-name" type="text"></br>
-
-    <label for="image-url">Image URL</label>
-    <input id="image-url" type="text"></br>
-
-    <label for="email">Email</label>
-    <input id="email" type="text"></br>
+    {% for field in form if field.widget.input_type != 'hidden' %}
+        {{ field.label }}
+        {{ field }}
+    {% endfor %}
 </form>
 {% endblock %}
