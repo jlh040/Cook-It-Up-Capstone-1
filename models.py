@@ -150,7 +150,7 @@ class Recipe(db.Model):
         return list_of_recipe_titles
     
     @classmethod
-    def get_recipes_by_query(cls, query):
+    def get_recipes_by_query_and_cals(cls, query, cals):
         """Search for a list of recipes by a query term."""
         api_endpoint = 'https://api.spoonacular.com/recipes/complexSearch'
 
@@ -158,11 +158,12 @@ class Recipe(db.Model):
             'query': query,
             'apiKey': API_KEY,
             'number': 100,
+            'maxCalories': cals,
             'instructionsRequired': True
         })
-
+       
         list_of_recipe_titles = [(dictt['id'], dictt['title']) for dictt in resp.json()['results']]
-        list_of_recipe_titles = make_additional_calls(resp, list_of_recipe_titles, query=query)
+        list_of_recipe_titles = make_additional_calls(resp, list_of_recipe_titles, query=query, cals=cals)
 
         return list_of_recipe_titles
     

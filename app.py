@@ -1,6 +1,6 @@
 from flask import Flask, session, g, flash, render_template, redirect, request
 from models import db, connect_db, User, Recipe
-from forms import SignupForm, LoginForm, EditUserForm
+from forms import SignupForm, LoginForm, EditUserForm, SearchForm
 from flask_debugtoolbar import DebugToolbarExtension
 from secret_keys import API_KEY, SECRET_KEY
 from helper_funcs import list_of_cuisines, check_for_no_image
@@ -41,7 +41,8 @@ def show_homepage():
 
     if g.user:
         # If a user is logged in take them to the main homepage
-        return render_template('home.html', cuisines=list_of_cuisines)
+        form = SearchForm()
+        return render_template('home.html', form=form, cuisines=list_of_cuisines)
     else:
         # Otherwise take them to the anonymous homepage
         return render_template('home_anon.html')
@@ -54,23 +55,24 @@ def list_recipes_by_cuisine(cuisine_type):
 
     return render_template('recipes_by_cuisine.html', recipes=recipes, cuisine_type=cuisine_type)
 
-@app.route('/recipes', methods=['GET'])
+@app.route('/recipes', methods=['GET', 'POST'])
 def list_recipes_by_query():
     """List all recipes based upon a search query
     and number of calories.
     """
-    # Get the params from the url
-    query = request.args.get('query')
-    if not query:
-        flash('Please enter a search term')
-        return redirect('/')
+    form = SearchForm()
 
-    # Get all recipes found from that query and then sort
-    recipes = Recipe.get_recipes_by_query(query)
-    recipes.sort(key=lambda x: x[1])
+    if form.validate_on_submit():
+        # Get the search query and number of calories
+        query = form.recipe_name.data
+        num_of_cals = form.num_of_cals.data
 
-    # Pass the recipes into the template to display to the user
-    return render_template('recipes_by_query.html', recipes=recipes)
+        # Get all recipes found using the above data
+        recipes = Recipe.get_recipes_by_query_and_cals(query, num_of_cals)
+        recipes.sort(key=lambda x: x[1])
+
+        # Pass the recipes into the template to display to the user
+        return render_template('recipes_by_query.html', recipes=recipes)
 
 @app.route('/recipes/<int:id>', methods=['GET'])
 def show_recipe_by_id(id):
