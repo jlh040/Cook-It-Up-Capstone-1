@@ -49,5 +49,20 @@ class UserModelTestCase(TestCase):
         db.session.commit()
         
         self.assertEqual(User.query.get(new_user2.id).username, 'jim847')
+    
+    def test_user_representation(self):
+        """Does our repr method work?"""
+        new_user3 = User(
+            username='leonidas87',
+            password='e9ciallz',
+            first_name='Neil',
+            email="free_dog@hotmail.com"
+        )
+        db.session.add(new_user3)
+        db.session.commit()
+
+        self.assertIn('leonidas87', str(new_user3))
+
+
 
 
