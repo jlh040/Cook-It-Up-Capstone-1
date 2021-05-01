@@ -5,7 +5,7 @@ Edit Your Information
 {% endblock %}
 
 {% block content %}
-<form action="">
+<form action="/users/{{ user.id }}/edit" method="POST">
     {{ form.hidden_tag() }}
 
     {% for field in form if field.widget.input_type != 'hidden' %}

@@ -41,7 +41,7 @@ class EditUserForm(FlaskForm):
     first_name = StringField('First Name',
                             validators=[InputRequired()])
 
-    last_name = StringField('First Name',
+    last_name = StringField('Last Name',
                             validators=[Optional()])
     
     image_url = StringField('Image URL',
