@@ -77,6 +77,18 @@ class User(db.Model):
             image_url=image_url,
             email=email
         )
+    
+    @classmethod
+    def login(cls, username, password):
+        """Return the user if they can be authenticated,
+        otherwise return False.
+        """
+        user = User.query.filter(User.username == username).first()
+
+        if user and bcrypt.check_password_hash(user.password, password):
+            return user
+        else:
+            return False
 
 class UserRecipe(db.Model):
     """Associates users and their favorite recipes."""

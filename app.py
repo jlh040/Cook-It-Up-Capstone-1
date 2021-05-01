@@ -110,6 +110,16 @@ def user_signup():
 def login_user():
     """Log a user in (after authentication)."""
     form = LoginForm()
+
+    if form.validate_on_submit():
+        user = User.login(form.username.data, form.password.data)
+
+        if user:
+            session[CURR_USER_KEY] = user.id
+            return redirect('/')
+        else:
+            form.username.errors = ['Bad username/password']
+
     return render_template('login.html', form=form)
 
 @app.route('/logout', methods=['GET'])
