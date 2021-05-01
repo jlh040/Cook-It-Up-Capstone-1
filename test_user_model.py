@@ -77,6 +77,52 @@ class UserModelTestCase(TestCase):
 
         self.assertIn('leonidas87', str(new_user3))
     
+    def test_add_favorite_recipe(self):
+        """Can a user add favorite recipes?"""
+        new_user4 = User(
+            username='tiger_guy5',
+            password='king_of_hill',
+            first_name='Larry',
+            email="needtiger2@hotmail.com"
+        )
+        
+        new_recipe = Recipe(api_id=1)
+        new_user4.favorite_recipes.append(new_recipe)
+        db.session.commit()
+
+        self.assertIn(new_recipe, new_user4.favorite_recipes)
+    
+    def test_remove_favorite_recipe(self):
+        """Can a user remove a favorite recipe?"""
+        new_user5 = User(
+            username='jim_bob87',
+            password='no_its_cool',
+            first_name='Jim Bob',
+            email="farmer_elite99@yahoo.com"
+        )
+
+        new_recipe_1 = Recipe(api_id=500)
+        new_user5.favorite_recipes.append(new_recipe_1)
+        db.session.commit()
+
+        new_user5.favorite_recipes.remove(new_recipe_1)
+        self.assertEqual(len(new_user5.favorite_recipes), 0)
+    
+    def test_default_values(self):
+        """Do our default values work?"""
+        new_user6 = User(
+            username='jim_bob87',
+            password='no_its_cool',
+            first_name='Jim Bob',
+            email="farmer_elite99@yahoo.com"
+        )
+        db.session.add(new_user6)
+        db.session.commit()
+
+        self.assertEqual(new_user6.image_url, 'https://tinyurl.com/profile-default-image')
+
+        
+    
 
 
 
