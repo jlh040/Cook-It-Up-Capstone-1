@@ -58,7 +58,11 @@ def list_recipes_by_cuisine(cuisine_type):
 def list_recipes_by_query():
     """List all recipes based upon a search query."""
     # Get the query param from the url
-    query = request.args['query']
+    query = request.args.get('query')
+    if not query:
+        flash('Please enter a search term')
+        return redirect('/')
+
     # Get all recipes found from that query and then sort
     recipes = Recipe.get_recipes_by_query(query)
     recipes.sort(key=lambda x: x[1])
@@ -179,7 +183,7 @@ def unfavorite_recipe(id):
     if not g.user:
         flash('Not authorized to do this!')
         return redirect('/')
-        
+
     fav_recipe = Recipe.query.get(id)
     g.user.favorite_recipes.remove(fav_recipe)
     db.session.commit()
