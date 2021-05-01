@@ -23,8 +23,18 @@ class UserModelTestCase(TestCase):
         User.query.delete()
         Recipe.query.delete()
         UserRecipe.query.delete()
-
+    
     def test_create_user(self):
+        """Can we create an instance of a user?"""
+        new_user0 = User(
+            username='bob8745',
+            password='some_pass12321x',
+            first_name='Bob',
+            email="chico23@gmail.com"
+        )
+        self.assertTrue(new_user0)
+
+    def test_create_user_in_db(self):
         """Can we create a new user in the database?"""
         new_user = User(
             username='bob8745',
@@ -62,6 +72,8 @@ class UserModelTestCase(TestCase):
         db.session.commit()
 
         self.assertIn('leonidas87', str(new_user3))
+    
+
 
 
 
