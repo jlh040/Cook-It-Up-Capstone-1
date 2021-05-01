@@ -138,7 +138,7 @@ class UserModelTestCase(TestCase):
             print('Something went wrong!')
     
     def test_login_method_registered(self):
-        """Does the login method work if we are registered?"""
+        """Does the login method authenticate us if we enter valid credentials?"""
         new_user8 = User.signup(
             username='Mikael77',
             password='anglo424',
@@ -149,16 +149,18 @@ class UserModelTestCase(TestCase):
         db.session.commit()
 
         self.assertIs(User.login('Mikael77', 'anglo424'), new_user8)
-
     
+    def test_login_method_unregistered(self):
+        """Does the login method return false if we enter invalid credentials?"""
+        new_user9 = User.signup(
+            username='dirtbikeguy',
+            password='rbby74x',
+            first_name='Sly',
+            last_name='Cooper',
+            image_url='https://tinyurl.com/profile-default-image',
+            email="tennis4ever@gmail.com"
+            )
+        db.session.add(new_user9)
+        db.session.commit()
 
-
-
-
-        
-    
-
-
-
-
-
+        self.assertFalse(User.login(username='dirtbikeguy', password='rbby74xx'))
