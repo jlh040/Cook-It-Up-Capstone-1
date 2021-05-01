@@ -51,6 +51,16 @@ class RecipeModelTestCase(TestCase):
         db.session.commit()
 
         self.assertIs(new_recipe3, Recipe.query.get(new_recipe3.id))
+    
+    def test_recipe_representation(self):
+        """Does our repr method work for the recipe class?"""
+
+        new_recipe4 = Recipe(api_id=17)
+        db.session.add(new_recipe4)
+        db.session.commit()
+
+        self.assertIn(f'api_id: {new_recipe4.api_id}', str(Recipe.query.get(new_recipe4.id)))
+
 
 
 
