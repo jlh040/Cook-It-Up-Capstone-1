@@ -36,4 +36,18 @@ class UserModelTestCase(TestCase):
         db.session.commit()
         
         self.assertTrue(User.query.count(), 1)
+    
+    def test_select_user(self):
+        """Can we query a user from the database?"""
+        new_user2 = User(
+            username='jim847',
+            password='14322321x',
+            first_name='Jimmy',
+            email="Jim23@gmail.com"
+        )
+        db.session.add(new_user2)
+        db.session.commit()
+        
+        self.assertEqual(User.query.get(new_user2.id).username, 'jim847')
+
 
