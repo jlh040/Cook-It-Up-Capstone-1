@@ -6,6 +6,9 @@
 
 {% block content %}
 <img src="{{ recipe_info[1] }}" alt="">
+<form action="/recipes/{{ id }}/favorite" method="POST">
+    <button>Favorite</button>
+</form>
 <h1>{{ recipe_info[0] }}</h1>
 
 <h2>Ingredients:</h2>

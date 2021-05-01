@@ -81,7 +81,8 @@ def show_recipe_by_id(id):
     return render_template('single_recipe.html',
                              recipe_info=recipe_info,
                              recipe_equip=recipe_equip,
-                             recipe_inst=recipt_inst)
+                             recipe_inst=recipt_inst,
+                             id=id)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def user_signup():
@@ -122,24 +123,27 @@ def login_user():
 
     return render_template('login.html', form=form)
 
-@app.route('/logout', methods=['GET']) #Make this a post route
-def logout_user():
-    """Clear the session and log the user out."""
-    session.clear()
-    return redirect('/')
+# @app.route('/logout', methods=['GET']) #Make this a post route
+# def logout_user():
+#     """Clear the session and log the user out."""
+#     session.clear()
+#     return redirect('/')
 
 @app.route('/users/<int:id>', methods=['GET'])
 def show_users_page(id):
     """Go to the user's page."""
+    # Get the user's favorite recipes
+    users_fav_recipes = Recipe.get_multiple_recipes(g.user.favorite_recipes)
+
+    # Make sure the user is authenticated
     if not session.get(CURR_USER_KEY):
         flash('Not authorized to go here!')
         return redirect('/')
     elif session.get(CURR_USER_KEY) is not id:
         flash('Not authorized to go here!')
         return redirect('/')
-
-    user = User.query.get(id)
-    return render_template('user.html', user=user)
+  
+    return render_template('user.html', user=g.user, recipes=users_fav_recipes)
 
 @app.route('/users/<int:id>/edit', methods=['GET', 'POST'])
 def edit_user(id):
@@ -157,6 +161,17 @@ def edit_user(id):
         flash('Information not valid')
 
     return render_template('edit_user.html', user=user, form=form)
+
+@app.route('/recipes/<int:id>/favorite', methods=['POST'])
+def add_recipe_to_favorites(id):
+    """Add a recipe to a user's favorites."""
+    recipe = Recipe.query.filter_by(api_id=id).one()
+    g.user.favorite_recipes.append(recipe)
+
+    db.session.commit()
+
+    flash('You favorited this recipe!')
+    return redirect(f'/recipes/{id}')
 
 
     

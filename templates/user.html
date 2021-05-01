@@ -9,8 +9,11 @@
 <h1>Welcome to your page {{ user.first_name }}</h1>
 
 <h2>Favorite Recipes:</h2>
+{% for id, title, image in recipes %}
+Title {{ title }}
+<img src="{{ image }}" alt="">
+{% endfor %}
 
-<h2>Cooked Recipes:</h2>
 
 <a href="/users/{{ user.id }}/edit">Edit Info</a>
 {% endblock %}

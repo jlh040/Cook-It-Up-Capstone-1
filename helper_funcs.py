@@ -89,3 +89,4 @@ def get_ingredients_from_recipe(resp):
 def check_for_no_image(form):
     if form.image_url.data == '':
         form.image_url.data = None
+

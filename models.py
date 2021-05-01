@@ -3,6 +3,7 @@ from flask_bcrypt import Bcrypt
 from secret_keys import API_KEY
 from helper_funcs import make_additional_calls, get_ingredients_from_recipe
 import requests
+import json
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -18,7 +19,7 @@ class User(db.Model):
 
     id = db.Column(
         db.Integer, 
-        autoincrement= True, 
+        autoincrement= True,
         primary_key = True
     )
 
@@ -201,6 +202,21 @@ class Recipe(db.Model):
         ]
 
         return list_of_instructions
+    
+    @classmethod
+    def get_multiple_recipes(cls, list_of_recipe_ids):
+        """Get multiple recipes at once."""
+        api_endpoint = 'https://api.spoonacular.com/recipes/informationBulk'
+        ids = [str(obj.id) for obj in list_of_recipe_ids]
+
+        resp = requests.get(api_endpoint, params = {
+            'apiKey': API_KEY,
+            'ids': ','.join(ids)
+        })
+        
+        recipe_list = [(obj['id'], obj['title'], obj['image']) for obj in resp.json()]
+        return recipe_list
+
 
 
     
