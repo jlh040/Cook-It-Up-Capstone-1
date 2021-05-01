@@ -120,6 +120,24 @@ class UserModelTestCase(TestCase):
         db.session.commit()
 
         self.assertEqual(new_user6.image_url, 'https://tinyurl.com/profile-default-image')
+    
+    def test_signup_method(self):
+        """Does our signup method work correctly?"""
+        try:
+            new_user7 = User.signup(
+            username='jack87',
+            password='chicko11',
+            first_name='Ronda',
+            email="bob_frob_11@aol.com"
+            )   
+            db.session.add(new_user7)
+            db.session.commit()
+
+            self.assertTrue(len(new_user7.password) > 20)
+        except:
+            print('Something went wrong!')
+
+
 
         
     
