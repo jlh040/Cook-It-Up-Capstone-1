@@ -131,10 +131,10 @@ def logout_user():
 @app.route('/users/<int:id>', methods=['GET'])
 def show_users_page(id):
     """Go to the user's page."""
-    if not session[CURR_USER_KEY]:
+    if not session.get(CURR_USER_KEY):
         flash('Not authorized to go here!')
         return redirect('/')
-    elif session[CURR_USER_KEY] is not id:
+    elif session.get(CURR_USER_KEY) is not id:
         flash('Not authorized to go here!')
         return redirect('/')
 
