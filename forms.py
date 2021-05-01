@@ -31,3 +31,18 @@ class LoginForm(FlaskForm):
     
     password = PasswordField('Password:',
                             validators=[InputRequired()])
+
+class EditUserForm(FlaskForm):
+    """Represents a form to edit a user."""
+
+    username = StringField('Username:',
+                            validators=[InputRequired()])
+    
+    first_name = StringField('First Name',
+                            validators=[InputRequired()])
+
+    last_name = StringField('First Name',
+                            validators=[Optional()])
+    
+    image_url = StringField('Image URL',
+                            validators=[Optional()])
