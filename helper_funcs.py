@@ -30,7 +30,7 @@ list_of_cuisines = [
             'Thai',
             'Vietnamese'
             ]
-            
+
 def make_additional_calls(resp, list_of_recipe_titles, cuisine_name=None, query=None):
     """Make additional calls if
     number of recipe results is > 100.
@@ -86,3 +86,6 @@ def get_ingredients_from_recipe(resp):
     
     return list_of_ingredients
 
+def check_for_no_image(form):
+    if form.image_url.data == '':
+        form.image_url.data = None

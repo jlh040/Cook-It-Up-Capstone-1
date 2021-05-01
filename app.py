@@ -3,7 +3,7 @@ from models import db, connect_db, User, Recipe
 from forms import SignupForm
 from flask_debugtoolbar import DebugToolbarExtension
 from secret_keys import API_KEY, SECRET_KEY
-from helper_funcs import list_of_cuisines
+from helper_funcs import list_of_cuisines, check_for_no_image
 
 import requests
 import os
@@ -83,11 +83,18 @@ def show_recipe_by_id(id):
                              recipe_equip=recipe_equip,
                              recipe_inst=recipt_inst)
 
+@app.route('/logout', methods=['GET'])
+def logout_user():
+    """Log the signed in user out."""
+    session.clear()
+    return redirect('/')
+
 @app.route('/signup', methods=['GET', 'POST'])
 def user_signup():
     """Sign the user up."""
     form = SignupForm()
-
+    check_for_no_image(form)
+    
     if form.validate_on_submit():
         user = User.signup(
             username=form.username.data,
