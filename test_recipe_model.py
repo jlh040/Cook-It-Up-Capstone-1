@@ -60,6 +60,20 @@ class RecipeModelTestCase(TestCase):
         db.session.commit()
 
         self.assertIn(f'api_id: {new_recipe4.api_id}', str(Recipe.query.get(new_recipe4.id)))
+    
+    def test_get_recipes_by_cuisine(self):
+        """Test that the get_recipes_by_cuisine method is functional
+        and that it returns appropriate dishes."""
+        list_of_recipes = Recipe.get_recipes_by_cuisine('Italian')
+        for id, title in list_of_recipes:
+            # Do we get Italian food?
+            if 'Italian' in title:
+                self.assertTrue(True)
+                break
+            else:
+                # If we see this failing test, no italian foods were returned
+                self.assertTrue(1, 2)
+
 
 
 
