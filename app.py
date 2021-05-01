@@ -56,8 +56,10 @@ def list_recipes_by_cuisine(cuisine_type):
 
 @app.route('/recipes', methods=['GET'])
 def list_recipes_by_query():
-    """List all recipes based upon a search query."""
-    # Get the query param from the url
+    """List all recipes based upon a search query
+    and number of calories.
+    """
+    # Get the params from the url
     query = request.args.get('query')
     if not query:
         flash('Please enter a search term')

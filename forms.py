@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField
+from wtforms import StringField, PasswordField, SelectField
 from wtforms.validators import InputRequired, Optional, Email
 
 class SignupForm(FlaskForm):
@@ -46,3 +46,21 @@ class EditUserForm(FlaskForm):
     
     image_url = StringField('Image URL',
                             validators=[Optional()])
+
+class SearchForm(FlaskForm):
+    """Represents a form to search for recipes."""
+    choices =[
+        (99, 'Less than 100'),
+        (199, 'Less than 200'),
+        (299, 'Less than 300'),
+        (399, 'Less than 400'),
+        (499, 'Less than 500')
+        (599, 'Less than 600')
+        (699, 'Less than 700')
+        (799, 'Less than 800')
+        (899, 'Less than 900')
+        (999, 'Less than 1000')
+    ]
+
+    recipe_name = StringField('Search Term', validators=[InputRequired()])
+    num_of_cals = SelectField('Number of Calories', choices=choices, coerce=int, default=599)
