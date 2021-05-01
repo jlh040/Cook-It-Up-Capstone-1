@@ -33,18 +33,27 @@ class RecipeModelTestCase(TestCase):
             new_recipe = Recipe(api_id=500000)
             self.assertTrue(True)
         except:
-            print('If this line runs, our instance must\'ve thrown an error.')
+            # If we see this failing test, something went wrong
+            self.assertEqual(1, 2)
     
     def test_create_instance_in_db(self):
         """Can a recipe be put into the database?"""
-        try:
-            new_recipe2 = Recipe(api_id=45)
-            db.session.add(new_recipe2)
-            db.session.commit()
+        new_recipe2 = Recipe(api_id=45)
+        db.session.add(new_recipe2)
+        db.session.commit()
 
-            self.assertTrue(True)
-        except:
-            print('If this line runs, something went wrong.')
+        self.assertEqual(Recipe.query.count(), 1)
+    
+    def test_query_recipe_from_db(self):
+        """Can we query a recipe from the database?"""
+        new_recipe3 = Recipe(api_id=50)
+        db.session.add(new_recipe3)
+        db.session.commit()
+
+        self.assertIs(new_recipe3, Recipe.query.get(new_recipe3.id))
+
+
+
 
 
 
