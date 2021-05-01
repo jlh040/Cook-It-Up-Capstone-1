@@ -21,6 +21,8 @@ debug = DebugToolbarExtension(app)
 
 connect_db(app)
 
+# Add 'cooked-it' table to show if you've cooked something (possibility)
+
 @app.before_request
 def add_user_to_global():
     """Add user to the g object."""
@@ -36,7 +38,7 @@ def add_user_to_global():
 def show_homepage():
     """Show the site's homepage."""
 
-    if g.user or True:
+    if g.user:
         # If a user is logged in take them to the main homepage
         return render_template('home.html', cuisines=list_of_cuisines)
     else:
@@ -79,4 +81,9 @@ def show_recipe_by_id(id):
                              recipe_info=recipe_info,
                              recipe_equip=recipe_equip,
                              recipe_inst=recipt_inst)
+
+@app.route('/signup', methods=['GET', 'POST'])
+def user_signup():
+    """Sign the user up."""
+    return render_template('signup.html')
     

@@ -51,7 +51,7 @@ class User(db.Model):
         nullable = False
     )
 
-    favorite_recipes = db.relationship(
+    favorite_recipes = db.relationship( # Changed to 'cooked-recipes' ?
         'Recipe', 
         secondary = 'users_recipes'
     )
