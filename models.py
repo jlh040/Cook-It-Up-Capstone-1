@@ -1,9 +1,11 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
 from secret_keys import API_KEY
 from helper_funcs import make_additional_calls, get_ingredients_from_recipe
 import requests
 
 db = SQLAlchemy()
+bcrypt = Bcrypt()
 
 def connect_db(app):
     db.app = app
@@ -59,6 +61,22 @@ class User(db.Model):
     def __repr__(self):
         """Create a representation of the user."""
         return f'<User: {self.username}, id: {self.id}>'
+    
+    @classmethod
+    def signup(cls, username, password, first_name, last_name, image_url, email):
+        """Register user w/ hashed password and return the user."""
+
+        hashed = bcrypt.generate_password_hash(password)
+        hashed_utf8 = hashed.decode('utf8')
+
+        return cls(
+            username=username,
+            password=hashed_utf8,
+            first_name=first_name,
+            last_name=last_name,
+            image_url=image_url,
+            email=email
+        )
 
 class UserRecipe(db.Model):
     """Associates users and their favorite recipes."""

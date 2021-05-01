@@ -87,5 +87,22 @@ def show_recipe_by_id(id):
 def user_signup():
     """Sign the user up."""
     form = SignupForm()
+
+    if form.validate_on_submit():
+        user = User.signup(
+            username=form.username.data,
+            password=form.password.data,
+            first_name=form.first_name.data,
+            last_name=form.last_name.data,
+            image_url=form.image_url.data,
+            email=form.email.data
+        )
+
+        db.session.add(user)
+        db.session.commit()
+        session[CURR_USER_KEY] = user.id
+
+        return redirect('/')
+
     return render_template('signup.html', form=form)
     
