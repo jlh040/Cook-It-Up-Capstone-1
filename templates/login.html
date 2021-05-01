@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Signup
+{% block page_title %}
+Login
 {% endblock %}
 
 {% block content %}
-<h1>Signup Page</h1>
-<form action="/signup" method='POST'>
+<form action="/login" method="POST">
     {{ form.hidden_tag() }}
 
     {% for field in form if field.widget.input_type != 'hidden' %}
