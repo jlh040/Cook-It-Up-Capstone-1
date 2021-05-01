@@ -1,6 +1,12 @@
 from app import app
 from models import db, User, Recipe, UserRecipe
 
+def fill_recipe_table():
+    for num in range(1, 2000000):
+        recipe = Recipe(api_id=num)
+        db.session.add(recipe)
+    db.session.commit()
+
 db.drop_all()
 db.create_all()
 
@@ -32,17 +38,8 @@ test_user_3 = User(
 db.session.add_all([test_user_1, test_user_2, test_user_3])
 db.session.commit()
 
-test_recipe_1 = Recipe(
-    api_id = 642539
-)
+fill_recipe_table()
 
-test_recipe_2 = Recipe(
-    api_id = 663357
-)
-
-db.session.add_all([test_recipe_1, test_recipe_2])
-db.session.commit()
-
-test_user_2.favorite_recipes.extend([test_recipe_1, test_recipe_2])
+test_user_2.favorite_recipes.extend([Recipe.query.get(1), Recipe.query.get(2)])
 
 db.session.commit()
