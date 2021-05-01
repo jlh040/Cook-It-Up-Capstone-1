@@ -122,7 +122,7 @@ class UserModelTestCase(TestCase):
         self.assertEqual(new_user6.image_url, 'https://tinyurl.com/profile-default-image')
     
     def test_signup_method(self):
-        """Does our signup method work correctly?"""
+        """Does our signup method return a user and hash the password?"""
         try:
             new_user7 = User.signup(
             username='jack87',
@@ -136,6 +136,22 @@ class UserModelTestCase(TestCase):
             self.assertTrue(len(new_user7.password) > 20)
         except:
             print('Something went wrong!')
+    
+    def test_login_method_registered(self):
+        """Does the login method work if we are registered?"""
+        new_user8 = User.signup(
+            username='Mikael77',
+            password='anglo424',
+            first_name='Johhny',
+            email="gromovia@gmail.com"
+            )
+        db.session.add(new_user8)
+        db.session.commit()
+
+        self.assertIs(User.login('Mikael77', 'anglo424'), new_user8)
+
+    
+
 
 
 
