@@ -1,6 +1,6 @@
 from flask import Flask, session, g, flash, render_template, redirect, request
 from models import db, connect_db, User, Recipe
-from forms import SignupForm, LoginForm
+from forms import SignupForm, LoginForm, EditUserForm
 from flask_debugtoolbar import DebugToolbarExtension
 from secret_keys import API_KEY, SECRET_KEY
 from helper_funcs import list_of_cuisines, check_for_no_image
@@ -128,10 +128,28 @@ def logout_user():
     session.clear()
     return redirect('/')
 
-@app.route('/users/<int:id>', methods=['GET', 'POST'])
+@app.route('/users/<int:id>', methods=['GET'])
 def show_users_page(id):
     """Go to the user's page."""
     user = User.query.get(id)
     return render_template('user.html', user=user)
+
+@app.route('/users/<int:id>/edit', methods=['GET', 'POST'])
+def edit_user(id):
+    """Edit a user's information."""
+    user = User.query.get(id)
+    form = EditUserForm(obj=user)
+
+    if form.validate_on_submit():
+        form.populate_obj(user)
+        db.session.add(user)
+        db.session.commit()
+        flash('Edit Successful!')
+        return redirect(f'/users/{id}')
+    else:
+        flash('Information not valid')
+
+    return render_template('edit_user.html', user=user, form=form)
+
 
     

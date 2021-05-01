@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 
 {% block page_title %}
-Your Page
+{{ user.first_name }}'s Page
 {% endblock %}
 
 {% block content %}
+<img src="{{ user.image_url }}" alt="">
 <h1>Welcome to your page {{ user.first_name }}</h1>
 
 <h2>Favorite Recipes:</h2>
 
 <h2>Cooked Recipes:</h2>
 
-<a href="">Edit Info</a>
+<a href="/users/{{ user.id }}/edit">Edit Info</a>
 {% endblock %}
