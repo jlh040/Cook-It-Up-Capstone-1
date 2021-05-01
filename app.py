@@ -173,5 +173,18 @@ def add_recipe_to_favorites(id):
     flash('You favorited this recipe!')
     return redirect(f'/recipes/{id}')
 
+@app.route('/recipes/<int:id>/unfavorite', methods=['POST'])
+def unfavorite_recipe(id):
+    """Remove this recipe from a user's favorites."""
+    if not g.user:
+        flash('Not authorized to do this!')
+        return redirect('/')
+        
+    fav_recipe = Recipe.query.get(id)
+    g.user.favorite_recipes.remove(fav_recipe)
+    db.session.commit()
+
+    return redirect(f'/users/{g.user.id}')
+
 
     
