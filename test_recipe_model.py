@@ -73,7 +73,7 @@ class RecipeModelTestCase(TestCase):
         
     def test_get_recipes_by_query_and_cals(self):
         """Is the get_recipes_by_query_and_cals method functional?"""
-        # Get an Italian dish with < 100 cals.
+        # Get an Italian dish with < 100 cals. (verified via API)
         id_of_low_cal_ital_dish = 637513
         low_cal_ital_dish = Recipe.get_recipe_info(id_of_low_cal_ital_dish)
 
@@ -88,13 +88,25 @@ class RecipeModelTestCase(TestCase):
     
     def test_get_recipe_info(self):
         """Test that we can get a recipe's meta-info based on its id."""
-        # This recipe has a title of 'Stilton Balsamic Pizza'
+        # This recipe has a title of 'Stilton Balsamic Pizza' (verified via api)
         id_of_recipe = 661640
 
         # Test that our class method gets this exact recipe
         recipe_info = Recipe.get_recipe_info(id_of_recipe)
 
         self.assertEqual(recipe_info[0], 'Stilton Balsamic Pizza')
+    
+    def test_get_equipement_for_recipe(self):
+        """Test that the get_equipment_for_recipe method returns a recipe's equipement."""
+        # This recipe requires both a peeler and baking paper (verified via API)
+        id_of_recipe = 665193
+
+        # Get the equipement using our method
+        equipment = Recipe.get_equipment_for_recipe(id_of_recipe)
+
+        # Test that the equipment noted above shows up in our response
+        self.assertIn('peeler', str(equipment))
+        self.assertIn('baking sheet', str(equipment))
         
 
 
