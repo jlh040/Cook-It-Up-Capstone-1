@@ -148,11 +148,11 @@ def login_user():
 
     return render_template('login.html', form=form)
 
-# @app.route('/logout', methods=['GET']) #Make this a post route
-# def logout_user():
-#     """Clear the session and log the user out."""
-#     session.clear()
-#     return redirect('/')
+@app.route('/logout', methods=['GET']) #Make this a post route
+def logout_user():
+    """Clear the session and log the user out."""
+    session.clear()
+    return redirect('/')
 
 @app.route('/users/<int:id>', methods=['GET'])
 def show_users_page(id):
