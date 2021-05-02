@@ -155,6 +155,18 @@ class ViewsTestCase(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertIn('<h1>Login</h1>', html)
+    
+    def login_user(self):
+        """Is a user able to login?"""
+        with self.client as c:
+            resp = c.post('/login', data={'username': 'some_guy87', 'password': 'redrobbin87231'})
+            self.assertEqual(resp.status_code, 302)
+
+            resp = c.post('/login', data={'username': 'some_guy87', 'password': 'redrobbin87231'},
+                                                                            follow_redirects=True)
+            html = resp.get_data(as_text = True)
+            self.assertIn('LOGGED IN HOMEPAGE')
+
 
 
 

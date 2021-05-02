@@ -146,6 +146,7 @@ def login_user():
 
         if user:
             session[CURR_USER_KEY] = user.id
+            flash('You logged in!')
             return redirect('/')
         else:
             form.username.errors = ['Bad username/password']
