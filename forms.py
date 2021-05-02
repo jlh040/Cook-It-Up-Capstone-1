@@ -3,6 +3,19 @@ from wtforms import StringField, PasswordField, SelectField
 from wtforms.validators import InputRequired, Optional, Email
 from helper_funcs import calorie_choices
 
+calorie_choices = [
+        (99, 'Less than 100'),
+        (199, 'Less than 200'),
+        (299, 'Less than 300'),
+        (399, 'Less than 400'),
+        (499, 'Less than 500'),
+        (599, 'Less than 600'),
+        (699, 'Less than 700'),
+        (799, 'Less than 800'),
+        (899, 'Less than 900'),
+        (999, 'Less than 1000')
+    ]
+
 class SignupForm(FlaskForm):
     """Represents a form to sign up"""
 

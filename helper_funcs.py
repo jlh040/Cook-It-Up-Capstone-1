@@ -31,19 +31,6 @@ list_of_cuisines = [
             'Vietnamese'
             ]
 
-calorie_choices = [
-        (99, 'Less than 100'),
-        (199, 'Less than 200'),
-        (299, 'Less than 300'),
-        (399, 'Less than 400'),
-        (499, 'Less than 500'),
-        (599, 'Less than 600'),
-        (699, 'Less than 700'),
-        (799, 'Less than 800'),
-        (899, 'Less than 900'),
-        (999, 'Less than 1000')
-    ]
-
 def make_additional_calls(resp, list_of_recipe_titles, cuisine_name=None, query=None, cals=None):
     """Make additional calls if
     number of recipe results is > 100.
