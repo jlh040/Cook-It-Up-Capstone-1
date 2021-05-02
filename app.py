@@ -38,7 +38,6 @@ def add_user_to_global():
 @app.route('/', methods=['GET'])
 def show_homepage():
     """Show the site's homepage."""
-
     if g.user:
         # If a user is logged in take them to the main homepage
         form = SearchForm()
@@ -50,10 +49,14 @@ def show_homepage():
 @app.route('/cuisines/<cuisine_type>', methods=['GET'])
 def list_recipes_by_cuisine(cuisine_type):
     """Show a list of recipes by cuisine type."""
-    recipes = Recipe.get_recipes_by_cuisine(cuisine_type)
-    recipes.sort(key=lambda x: x[1])
+    if g.user:
+        recipes = Recipe.get_recipes_by_cuisine(cuisine_type)
+        recipes.sort(key=lambda x: x[1])
 
-    return render_template('recipes_by_cuisine.html', recipes=recipes, cuisine_type=cuisine_type)
+        return render_template('recipes_by_cuisine.html', recipes=recipes, cuisine_type=cuisine_type)
+    else:
+        flash('Log in or make an account to view this')
+        return redirect('/')
 
 @app.route('/recipes', methods=['GET', 'POST'])
 def list_recipes_by_query():
@@ -61,6 +64,10 @@ def list_recipes_by_query():
     and number of calories.
     """
     form = SearchForm()
+
+    if not g.user:
+        flash('Unauthorized to view this')
+        return redirect('/')
 
     if form.validate_on_submit():
         # Get the search query and number of calories
@@ -73,10 +80,20 @@ def list_recipes_by_query():
 
         # Pass the recipes into the template to display to the user
         return render_template('recipes_by_query.html', recipes=recipes)
+    else:
+        flash('Enter a search term first')
+        return redirect('/')
+    
+    
 
 @app.route('/recipes/<int:id>', methods=['GET'])
 def show_recipe_by_id(id):
     """Show a recipe's nformation."""
+
+    if not g.user:
+        flash('Unauthorized to view this')
+        return redirect('/')
+
     # Get the title, image, and ingredients
     recipe_info = Recipe.get_recipe_info(id)
 
@@ -156,6 +173,11 @@ def show_users_page(id):
 @app.route('/users/<int:id>/edit', methods=['GET', 'POST'])
 def edit_user(id):
     """Edit a user's information."""
+
+    if not g.user.id == id:
+        flash('Not authorized to view this page')
+        return redirect('/')
+
     user = User.query.get(id)
     form = EditUserForm(obj=user)
 
@@ -165,14 +187,17 @@ def edit_user(id):
         db.session.commit()
         flash('Edit Successful!')
         return redirect(f'/users/{id}')
-    else:
-        flash('Information not valid')
 
     return render_template('edit_user.html', user=user, form=form)
 
 @app.route('/recipes/<int:id>/favorite', methods=['POST'])
 def add_recipe_to_favorites(id):
     """Add a recipe to a user's favorites."""
+
+    if not g.user.id == id:
+        flash('Not authorized to do this')
+        return redirect('/')
+
     recipe = Recipe.query.filter_by(api_id=id).one()
     g.user.favorite_recipes.append(recipe)
 
@@ -184,7 +209,7 @@ def add_recipe_to_favorites(id):
 @app.route('/recipes/<int:id>/unfavorite', methods=['POST'])
 def unfavorite_recipe(id):
     """Remove this recipe from a user's favorites."""
-    if not g.user:
+    if not g.user.id == id:
         flash('Not authorized to do this!')
         return redirect('/')
 
