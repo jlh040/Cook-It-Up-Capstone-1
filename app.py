@@ -207,6 +207,9 @@ def add_recipe_to_favorites(id):
     if not g.user:
         flash('Not authorized to do this')
         return redirect('/')
+    elif id in [obj.id for obj in g.user.favorite_recipes]:
+        flash('You already favorited this recipe')
+        return redirect(f'/recipes/{id}')
 
     recipe = Recipe.query.filter_by(api_id=id).one()
     g.user.favorite_recipes.append(recipe)
@@ -219,12 +222,17 @@ def add_recipe_to_favorites(id):
 @app.route('/recipes/<int:id>/unfavorite', methods=['POST'])
 def unfavorite_recipe(id):
     """Remove this recipe from a user's favorites."""
-    if not g.user.id == id:
-        flash('Not authorized to do this!')
+
+    if not g.user:
+        flash('Not authorized to do this')
         return redirect('/')
+    elif id not in [obj.id for obj in g.user.favorite_recipes]:
+        flash('You haven\'t favorited this recipe')
+        return redirect(f'/recipes/{id}')
 
     fav_recipe = Recipe.query.get(id)
     g.user.favorite_recipes.remove(fav_recipe)
     db.session.commit()
 
-    return redirect(f'/users/{g.user.id}')
+    flash('You unfavorited this recipe')
+    return redirect(f'/recipes/{id}')

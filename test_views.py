@@ -1,7 +1,7 @@
 """Test view functions / routes."""
 
 from unittest import TestCase
-from models import db, User, Recipe, UserRecipe
+from models import db, User, Recipe
 from secret_keys import API_KEY
 import os
 
@@ -18,8 +18,8 @@ class ViewsTestCase(TestCase):
 
     def setUp(self):
         """Make a test user and set up the test client."""
-        db.drop_all()
-        db.create_all()
+        User.query.delete()
+        Recipe.query.delete()
 
         self.test_user = User.signup(
             username='some_guy87',
@@ -155,19 +155,18 @@ class ViewsTestCase(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn('<h1>Login</h1>', html)
     
-    def login_user(self):
+    def test_login_user(self):
         """Is a user able to login?"""
         with self.client as c:
             resp = c.post('/login', data={'username': 'some_guy87', 'password': 'redrobbin87231'})
             self.assertEqual(resp.status_code, 302)
 
-            resp = c.post('/login', data={'username': 'some_guy87', 'password': 'redrobbin87231'},
-                                                                            follow_redirects=True)
+            resp = c.post('/login', data={'username': 'some_guy87', 'password': 'redrobbin87231'}, follow_redirects=True)
             html = resp.get_data(as_text = True)
             self.assertEqual(resp.status_code, 200)
-            self.assertIn('LOGGED IN HOMEPAGE')
+            self.assertIn('You logged in!', html)
     
-    def logout_user(self):
+    def test_logout_user(self):
         """Is a user able to logout?"""
         with self.client as c:
             with c.session_transaction() as sess:
@@ -277,7 +276,7 @@ class ViewsTestCase(TestCase):
             with c.session_transaction() as sess:
                 sess[CURR_USER_KEY] = self.test_user.id
             
-            mock_recipe = Recipe(api_id=655689) # Peppermint sugar cookies with chocolate drizzle (verified by API)
+            mock_recipe = Recipe(api_id=655689) # Peppermint sugar cookies with chocolate drizzle (verified with API)
             db.session.add(mock_recipe)
             db.session.commit()
 
@@ -287,6 +286,28 @@ class ViewsTestCase(TestCase):
             resp = c.get(f'/users/{self.test_user.id}')
             html = resp.get_data(as_text=True)
             self.assertIn('Peppermint Sugar Cookies with Chocolate Drizzle', html)
+
+    def test_unfavorite_recipe(self):
+        """Can we unfavorite one of our favorited recipes?"""
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = self.test_user.id
+            
+            mock_recipe_2 = Recipe(api_id=1) # Fried Anchovies with Sage (verified with API)
+            db.session.add(mock_recipe_2)
+            db.session.commit()
+
+            resp = c.post(f'/recipes/{1}/favorite', follow_redirects=True)
+            html = resp.get_data(as_text=True)
+            self.assertIn('You favorited this recipe!', html)
+
+            resp = c.post(f'/recipes/{1}/unfavorite', follow_redirects=True)
+            html = resp.get_data(as_text=True)
+            self.assertNotIn('You unfavorited this recipe', html)
+
+
+
+
 
 
 
