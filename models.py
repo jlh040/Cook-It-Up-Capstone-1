@@ -217,20 +217,3 @@ class Recipe(db.Model):
         
         recipe_list = [(obj['id'], obj['title'], obj['image']) for obj in resp.json()]
         return recipe_list
-
-
-
-    
-
-
-
-
-
-
-
-        
-
-
-
-
-    

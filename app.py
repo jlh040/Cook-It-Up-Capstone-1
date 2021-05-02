@@ -218,6 +218,3 @@ def unfavorite_recipe(id):
     db.session.commit()
 
     return redirect(f'/users/{g.user.id}')
-
-
-    
