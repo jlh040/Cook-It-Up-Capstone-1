@@ -107,6 +107,20 @@ class RecipeModelTestCase(TestCase):
         # Test that the equipment noted above shows up in our response
         self.assertIn('peeler', str(equipment))
         self.assertIn('baking sheet', str(equipment))
+    
+    def test_get_instructions_for_recipe(self):
+        """Test that the get_instructions_for_recipe_method_works."""
+        # This recipe requires us to 'Boil the Chicken' and also to
+        # 'Stir in your peanut Butter' (verified via API)
+        id_of_recipe = 716268
+
+        # Get the instructions using our class method
+        instructions = Recipe.get_instructions_for_recipe(id_of_recipe)
+
+        # Check that the above instructions are in our response
+        self.assertIn('Boil the Chicken', str(instructions))
+        self.assertIn('Stir in your peanut Butter', str(instructions))
+
         
 
 
