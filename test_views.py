@@ -26,7 +26,7 @@ class ViewsTestCase(TestCase):
         self.test_user = User.signup(
             username='some_guy87',
             password='redrobbin87231',
-            first_name='Mark',
+            first_name='Django',
             last_name='Riano',
             email='flako@gmail.com'
         )
@@ -189,7 +189,11 @@ class ViewsTestCase(TestCase):
             with c.session_transaction() as sess:
                 sess[CURR_USER_KEY] = self.test_user.id
             
-            
+            resp = c.get(f'/users/{self.test_user.id}', follow_redirects=True)
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn('Welcome to your page Django', html)
 
 
 

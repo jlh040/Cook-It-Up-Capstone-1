@@ -169,10 +169,10 @@ def show_users_page(id):
 
     # Make sure the user is authenticated
     if not session.get(CURR_USER_KEY):
-        flash('Not authorized to go here!')
+        flash('Not authorized to go here')
         return redirect('/')
-    elif session.get(CURR_USER_KEY) is not id:
-        flash('Not authorized to go here!')
+    elif session.get(CURR_USER_KEY) != id:
+        flash('Not authorized to view this')
         return redirect('/')
   
     return render_template('user.html', user=g.user, recipes=users_fav_recipes)
