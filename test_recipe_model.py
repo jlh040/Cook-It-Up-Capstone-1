@@ -23,8 +23,6 @@ class RecipeModelTestCase(TestCase):
         User.query.delete()
         Recipe.query.delete()
         UserRecipe.query.delete()
-
-        self.testclient = app.test_client()
     
     def test_create_instance(self):
         """Can a recipe instance be created?"""
