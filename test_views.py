@@ -19,9 +19,21 @@ class ViewsTestCase(TestCase):
     """Test that view functions are working properly."""
 
     def setUp(self):
+        """Make a test user and set up the test client."""
         User.query.delete()
         Recipe.query.delete()
 
-        self.client = app.test_client()
+        self.test_user = User.signup(
+            username='some_guy87',
+            password='redrobbin87231'
+            first_name='Mark',
+            last_name='Riano',
+            email='flako@gmail.com'
+        )
+        db.session.commit()
 
-        
+        self.client = app.test_client()
+    
+
+
+
