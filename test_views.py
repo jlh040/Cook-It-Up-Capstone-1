@@ -53,7 +53,17 @@ class ViewsTestCase(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertIn('<h1>ANONYMOUS HOMEPAGE</h1>', html)
+    
+    def test_see_cuisines_logged_in(self):
+        """Can we search for a list of cuisines, when logged in?"""
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = self.test_user.id
 
+        resp = c.get('/cuisines/nordic')
+        html = resp.get_data(as_text=True)
+
+        self.assertIn('Knekkebrød', html)
 
 
 
