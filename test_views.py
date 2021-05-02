@@ -90,6 +90,32 @@ class ViewsTestCase(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertIn('Brownie', html)
+    
+    def test_cant_search_recipes_logged_out(self):
+        """Are we restricted from searching for recipes when logged out?"""
+        with self.client as c:
+            resp = c.post('/recipes', data={'recipe_name': 'chicken', 'num_of_cals': 399})
+            self.assertEqual(resp.status_code, 302)
+
+            resp = c.post('/recipes', data={'recipe_name': 'chicken', 'num_of_cals': 399}, follow_redirects=True)
+            html = resp.get_data(as_text=True)
+            self.assertIn('Unauthorized to view this', html)     
+
+    def test_see_recipe_page_logged_in(self):
+        """Can we see a recipe's page when logged in?"""
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = self.test_user.id
+            
+            resp = c.get('/recipes/663822')
+            html = resp.get_data(as_text=True)
+
+            self.assertIn('Trinidad Callaloo Soup', html)
+
+
+
+
+
 
 
     
