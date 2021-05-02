@@ -204,6 +204,35 @@ class ViewsTestCase(TestCase):
             resp = c.get(f'/users/{self.test_user.id}', follow_redirects=True)
             html = resp.get_data(as_text=True)
             self.assertIn('Not authorized to go here', html)
+    
+    def test_not_see_page_of_another_user(self):
+        """Are we restricted from seeing the page of another user
+        even if we are logged in?
+        """
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = self.test_user.id
+                
+            new_user2 = User.signup(
+            username='cricket1',
+            password='somethingsecret',
+            first_name='May',
+            last_name='Kloa',
+            email='delph@gmail.com'
+            )
+            db.session.add(new_user2)
+            db.session.commit()
+            
+            resp = c.get(f'/users/{new_user2.id}')
+            self.assertEqual(resp.status_code, 302)
+
+            resp = c.get(f'/users/{new_user2.id}', follow_redirects=True)
+            html = resp.get_data(as_text=True)
+            self.assertIn('Not authorized to view this', html)
+
+
+
+
 
 
 
