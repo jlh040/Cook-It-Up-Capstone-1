@@ -154,6 +154,7 @@ class ViewsTestCase(TestCase):
             resp = c.get('/login')
             html = resp.get_data(as_text=True)
 
+            self.assertEqual(resp.status_code, 200)
             self.assertIn('<h1>Login</h1>', html)
     
     def login_user(self):
@@ -165,8 +166,22 @@ class ViewsTestCase(TestCase):
             resp = c.post('/login', data={'username': 'some_guy87', 'password': 'redrobbin87231'},
                                                                             follow_redirects=True)
             html = resp.get_data(as_text = True)
+            self.assertEqual(resp.status_code, 200)
             self.assertIn('LOGGED IN HOMEPAGE')
+    
+    def logout_user(self):
+        """Is a user able to logout?"""
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = self.test_user.id
+            
+            resp = c.get('/logout', follow_redirects=True)
+            html = resp.get_data(as_text=True)
+            self.assertIn('ANONYMOUS HOMEPAGE', html)
 
+            resp2 = c.get('/')
+            html2 = resp2.get_data(as_text=True)
+            self.assertIn('ANONYMOUS HOMEPAGE', html2)
 
 
 
