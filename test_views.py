@@ -79,6 +79,17 @@ class ViewsTestCase(TestCase):
             resp = c.get('/cuisines/Nordic', follow_redirects=True)
             html = resp.get_data(as_text=True)
             self.assertIn('Log in or make an account to view this', html)
+    
+    def test_search_recipes_logged_in(self):
+        """Can we search for recipes when logged in?"""
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = self.test_user.id
+            
+            resp = c.post('/recipes', data={'recipe_name': 'brownie', 'num_of_cals': 199})
+            html = resp.get_data(as_text=True)
+
+            self.assertIn('Brownie', html)
 
 
     
