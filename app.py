@@ -164,9 +164,6 @@ def logout_user():
 @app.route('/users/<int:id>', methods=['GET'])
 def show_users_page(id):
     """Go to the user's page."""
-    # Get the user's favorite recipes
-    users_fav_recipes = Recipe.get_multiple_recipes(g.user.favorite_recipes)
-
     # Make sure the user is authenticated
     if not session.get(CURR_USER_KEY):
         flash('Not authorized to go here')
@@ -174,6 +171,9 @@ def show_users_page(id):
     elif session.get(CURR_USER_KEY) != id:
         flash('Not authorized to view this')
         return redirect('/')
+    
+    # Get the user's favorite recipes
+    users_fav_recipes = Recipe.get_multiple_recipes(g.user.favorite_recipes)
   
     return render_template('user.html', user=g.user, recipes=users_fav_recipes)
 

@@ -194,6 +194,19 @@ class ViewsTestCase(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn('Welcome to your page Django', html)
+    
+    def test_not_see_user_page_nli(self):
+        """Are we restricted from seeing a user's page when not logged in?"""
+        with self.client as c:
+            resp = c.get(f'/users/{self.test_user.id}')
+            self.assertEqual(resp.status_code, 302)
+
+            resp = c.get(f'/users/{self.test_user.id}', follow_redirects=True)
+            html = resp.get_data(as_text=True)
+            self.assertIn('Not authorized to go here', html)
+
+
+
 
 
 
