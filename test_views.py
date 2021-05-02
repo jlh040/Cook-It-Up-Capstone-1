@@ -124,6 +124,14 @@ class ViewsTestCase(TestCase):
             resp = c.get('/recipes/663822', follow_redirects=True)
             html = resp.get_data(as_text=True)
             self.assertIn('Unauthorized to view this', html)
+    
+    def test_see_signup(self):
+        """Are we able to see the signup page?"""
+        with self.client as c:
+            resp = c.get('/signup')
+            html = resp.get_data(as_text=True)
+
+            self.assertIn('Signup', html)
 
 
 
