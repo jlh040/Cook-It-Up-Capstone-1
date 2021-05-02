@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SelectField
 from wtforms.validators import InputRequired, Optional, Email
-from helper_funcs import calorie_choices
 
 calorie_choices = [
         (99, 'Less than 100'),
