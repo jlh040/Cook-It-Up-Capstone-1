@@ -147,6 +147,14 @@ class ViewsTestCase(TestCase):
 
             self.assertIn('You successfully signed up!', html)
             self.assertEqual(User.query.count(), 2)
+    
+    def test_see_login(self):
+        """Can we see the login page?"""
+        with self.client as c:
+            resp = c.get('/login')
+            html = resp.get_data(as_text=True)
+
+            self.assertIn('<h1>Login</h1>', html)
 
 
 

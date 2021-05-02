@@ -149,6 +149,8 @@ def login_user():
             return redirect('/')
         else:
             form.username.errors = ['Bad username/password']
+    elif not form.validate_on_submit() and request.method == 'POST':
+        flash('Please signup from the website')
 
     return render_template('login.html', form=form)
 
