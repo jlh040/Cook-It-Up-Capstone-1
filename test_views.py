@@ -44,6 +44,7 @@ class ViewsTestCase(TestCase):
             resp = c.get('/')
             html = resp.get_data(as_text=True)
 
+            self.assertEqual(resp.status_code, 200)
             self.assertIn('<h1>LOGGED-IN HOMEPAGE</h1>', html)
     
     def test_homepage_logged_out(self):
@@ -52,6 +53,7 @@ class ViewsTestCase(TestCase):
             resp = c.get('/')
             html = resp.get_data(as_text=True)
 
+            self.assertEqual(resp.status_code, 200)
             self.assertIn('<h1>ANONYMOUS HOMEPAGE</h1>', html)
     
     def test_see_cuisines_logged_in(self):
@@ -63,17 +65,23 @@ class ViewsTestCase(TestCase):
         resp = c.get('/cuisines/nordic')
         html = resp.get_data(as_text=True)
 
+        self.assertEqual(resp.status_code, 200)
         self.assertIn('Knekkebrød', html)
     
-    def not_see_cuisines_logged_out(self):
-        """Are we not allowsed to view cuisines when logged out?"""
+    def test_not_see_cuisines_logged_out(self):
+        """Are we not allowed to view foods of a certain
+        cuisine type when logged out?
+        """
         with self.client as c:
             resp = c.get('/cuisines/Nordic')
+            self.assertEqual(resp.status_code, 302)
+
+            resp = c.get('/cuisines/Nordic', follow_redirects=True)
             html = resp.get_data(as_text=True)
+            self.assertIn('Log in or make an account to view this', html)
 
-            self.assertIn('<p>Log in or make an account to view this</p>', html)
 
-
+    
 
 
 
