@@ -231,7 +231,7 @@ class ViewsTestCase(TestCase):
             self.assertIn('Not authorized to view this', html)
     
     def test_edit_user(self):
-        """Can we edit our profile?"""
+        """Can we edit our own profile?"""
         with self.client as c:
             with c.session_transaction() as sess:
                 sess[CURR_USER_KEY] = self.test_user.id
@@ -249,6 +249,32 @@ class ViewsTestCase(TestCase):
             self.assertIn('Edit Successful!', html)
 
             self.assertEqual(User.query.get(self.test_user.id).username, 'new_username')
+
+    def test_cannot_edit_other_user(self):
+        """Are we restricted from editing another user?"""
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = self.test_user.id
+            new_user3 = User.signup(
+                username='cricket1',
+                password='somethingsecret',
+                first_name='May',
+                last_name='Kloa',
+                email='delph@gmail.com'
+                )
+            db.session.add(new_user3)
+            db.session.commit()
+                
+            resp = c.post(f'/users/{new_user3.id}/edit')
+            self.assertEqual(resp.status_code, 302)
+
+            resp = c.post(f'/users/{new_user3.id}/edit', follow_redirects=True)
+            html = resp.get_data(as_text=True)
+
+            self.assertIn('Not authorized to view this page', html)
+
+
+
 
 
 
