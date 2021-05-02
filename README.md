@@ -4,7 +4,7 @@
 
 ### Demographics:
 
-- Young professionals age 18-35 living alone
+- Professionals age 18+
 
 ### Motivation
 
