@@ -183,6 +183,13 @@ class ViewsTestCase(TestCase):
             html2 = resp2.get_data(as_text=True)
             self.assertIn('ANONYMOUS HOMEPAGE', html2)
 
+    def test_see_user_page(self):
+        """Can a user see their own page when logged in?"""
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = self.test_user.id
+            
+            
 
 
 
