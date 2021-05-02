@@ -181,7 +181,7 @@ def show_users_page(id):
 def edit_user(id):
     """Edit a user's information."""
 
-    if not g.user.id == id:
+    if not g.user or not g.user.id == id:
         flash('Not authorized to view this page')
         return redirect('/')
 
@@ -194,6 +194,9 @@ def edit_user(id):
         db.session.commit()
         flash('Edit Successful!')
         return redirect(f'/users/{id}')
+    elif not form.validate_on_submit() and request.method == 'POST':
+        flash('Please enter valid information')
+        return redirect(f'/users/{id}/edit')
 
     return render_template('edit_user.html', user=user, form=form)
 

@@ -212,7 +212,7 @@ class ViewsTestCase(TestCase):
         with self.client as c:
             with c.session_transaction() as sess:
                 sess[CURR_USER_KEY] = self.test_user.id
-                
+
             new_user2 = User.signup(
             username='cricket1',
             password='somethingsecret',
@@ -229,6 +229,32 @@ class ViewsTestCase(TestCase):
             resp = c.get(f'/users/{new_user2.id}', follow_redirects=True)
             html = resp.get_data(as_text=True)
             self.assertIn('Not authorized to view this', html)
+    
+    def test_edit_user(self):
+        """Can we edit our profile?"""
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = self.test_user.id
+            new_data = {
+                'username': 'new_username',
+                'first_name': self.test_user.first_name,
+                'last_name': self.test_user.last_name,
+                'image_url': self.test_user.image_url
+            }
+            resp = c.post(f'/users/{self.test_user.id}/edit', data=new_data)
+            self.assertEqual(resp.status_code, 302)
+
+            resp = c.post(f'/users/{self.test_user.id}/edit', data=new_data, follow_redirects=True)
+            html = resp.get_data(as_text=True)
+            self.assertIn('Edit Successful!', html)
+
+            self.assertEqual(User.query.get(self.test_user.id).username, 'new_username')
+
+
+
+            
+
+
 
 
 
