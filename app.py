@@ -128,7 +128,11 @@ def user_signup():
         db.session.add(user)
         db.session.commit()
         session[CURR_USER_KEY] = user.id
+
+        flash('You successfully signed up!')
         return redirect('/')
+    elif not form.validate_on_submit() and request.method == 'POST':
+        flash('Please signup from the website')
 
     return render_template('signup.html', form=form)
 

@@ -132,6 +132,21 @@ class ViewsTestCase(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertIn('Signup', html)
+    
+    def test_signup_user(self):
+        """Is a user able to signup?"""
+        with self.client as c:
+            data = {
+                'username': 'ricky_seal89',
+                'password': 'trainluvr56',
+                'first_name': 'john',
+                'email': 'skyguy89@gmail.com'
+            }
+            resp = c.post('/signup', data=data, follow_redirects=True)
+            html = resp.get_data(as_text=True)
+
+            self.assertIn('You successfully signed up!', html)
+            self.assertEqual(User.query.count(), 2)
 
 
 
