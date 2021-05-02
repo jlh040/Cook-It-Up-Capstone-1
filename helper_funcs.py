@@ -86,12 +86,6 @@ def make_request_by_cuisine(api_endpoint, cuisine_name, offset):
             })
     return resp
 
-def get_upper_alphabet():
-    lower_alphabet = list('abcdefghijklmnopqrstuvwxyz')
-    upper_alphabet = [ltr.upper() for ltr in lower_alphabet]
-
-    return upper_alphabet
-
 def get_ingredients_from_recipe(resp):
     """Get a list of ingredients from a recipe."""
     list_of_ingredients = []
