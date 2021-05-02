@@ -208,11 +208,11 @@ class Recipe(db.Model):
     def get_multiple_recipes(cls, list_of_recipe_objs):
         """Get multiple recipes at once."""
         api_endpoint = 'https://api.spoonacular.com/recipes/informationBulk'
-        ids = [str(obj.id) for obj in list_of_recipe_objs]
+        api_ids = [str(obj.api_id) for obj in list_of_recipe_objs]
 
         resp = requests.get(api_endpoint, params = {
             'apiKey': API_KEY,
-            'ids': ','.join(ids)
+            'ids': ','.join(api_ids)
         })
         
         recipe_list = [(obj['id'], obj['title'], obj['image']) for obj in resp.json()]

@@ -120,6 +120,28 @@ class RecipeModelTestCase(TestCase):
         # Check that the above instructions are in our response
         self.assertIn('Boil the Chicken', str(instructions))
         self.assertIn('Stir in your peanut Butter', str(instructions))
+    
+    def test_get_multiple_recipes(self):
+        """Write a test to check that the get_multiple_recipes
+        method returns multiple recipes (and they must be correct).
+        """
+        # This recipe is for Trinidad Callaloo Soup (verified by API)
+        recipe_1 = Recipe(api_id=663822)
+
+         # This recipe is for Peppermint White Chocolate Fudge (verified by API)
+        recipe_2 = Recipe(api_id=655687)
+
+        # Add and commit
+        db.session.add_all([recipe_1, recipe_2])
+        db.session.commit()
+
+        # Get recipe info for these two recipes, using our class method
+        recipes_info = Recipe.get_multiple_recipes([recipe_1, recipe_2])       
+
+        # Check that the response contains info for the above two recipes
+        self.assertIn('Trinidad Callaloo Soup', str(recipes_info))
+        self.assertIn('Peppermint White Chocolate Fudge', str(recipes_info))
+
 
         
 
