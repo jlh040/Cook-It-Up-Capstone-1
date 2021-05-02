@@ -141,15 +141,3 @@ class RecipeModelTestCase(TestCase):
         # Check that the response contains info for the above two recipes
         self.assertIn('Trinidad Callaloo Soup', str(recipes_info))
         self.assertIn('Peppermint White Chocolate Fudge', str(recipes_info))
-
-
-        
-
-
-
-
-
-
-
-
-
