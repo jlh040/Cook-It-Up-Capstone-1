@@ -104,12 +104,12 @@ class UserRecipe(db.Model):
 
     user_id = db.Column(
         db.Integer, 
-        db.ForeignKey('users.id')
+        db.ForeignKey('users.id', ondelete='cascade')
     )
 
     recipe_id = db.Column(
         db.Integer, 
-        db.ForeignKey('recipes.id')
+        db.ForeignKey('recipes.id', ondelete='cascade')
     )
 
 class Recipe(db.Model):

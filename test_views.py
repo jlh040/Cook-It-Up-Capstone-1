@@ -1,7 +1,7 @@
 """Test view functions / routes."""
 
 from unittest import TestCase
-from models import db, User, Recipe
+from models import db, User, Recipe, UserRecipe
 from secret_keys import API_KEY
 import os
 
@@ -13,15 +13,13 @@ app.config['TESTING'] = True
 app.config['WTF_CSRF_ENABLED'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 
-db.create_all()
-
 class ViewsTestCase(TestCase):
     """Test that view functions are working properly."""
 
     def setUp(self):
         """Make a test user and set up the test client."""
-        User.query.delete()
-        Recipe.query.delete()
+        db.drop_all()
+        db.create_all()
 
         self.test_user = User.signup(
             username='some_guy87',
@@ -256,11 +254,11 @@ class ViewsTestCase(TestCase):
             with c.session_transaction() as sess:
                 sess[CURR_USER_KEY] = self.test_user.id
             new_user3 = User.signup(
-                username='cricket1',
-                password='somethingsecret',
-                first_name='May',
+                username='jim_bo17',
+                password='x8jfm2ka',
+                first_name='Jack',
                 last_name='Kloa',
-                email='delph@gmail.com'
+                email='caddy_shack@gmail.com'
                 )
             db.session.add(new_user3)
             db.session.commit()
@@ -272,6 +270,31 @@ class ViewsTestCase(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertIn('Not authorized to view this page', html)
+    
+    def test_favorite_recipe(self):
+        """If we favorite a recipe, does it show up on our page?"""
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = self.test_user.id
+            
+            mock_recipe = Recipe(api_id=655689) # Peppermint sugar cookies with chocolate drizzle (verified by API)
+            db.session.add(mock_recipe)
+            db.session.commit()
+
+            resp = c.post(f'/recipes/{655689}/favorite')
+            self.assertEqual(resp.status_code, 302)
+
+            resp = c.get(f'/users/{self.test_user.id}')
+            html = resp.get_data(as_text=True)
+            self.assertIn('Peppermint Sugar Cookies with Chocolate Drizzle', html)
+
+
+
+
+
+            
+
+
 
 
 

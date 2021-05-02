@@ -204,7 +204,7 @@ def edit_user(id):
 def add_recipe_to_favorites(id):
     """Add a recipe to a user's favorites."""
 
-    if not g.user.id == id:
+    if not g.user:
         flash('Not authorized to do this')
         return redirect('/')
 
