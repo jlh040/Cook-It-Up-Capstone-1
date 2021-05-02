@@ -85,6 +85,16 @@ class RecipeModelTestCase(TestCase):
             if title == low_cal_ital_dish[0]:
                 # If we see this passing test, our dish was found in the list
                 self.assertTrue(True)
+    
+    def test_get_recipe_info(self):
+        """Test that we can get a recipe's meta-info based on its id."""
+        # This recipe has a title of 'Stilton Balsamic Pizza'
+        id_of_recipe = 661640
+
+        # Test that our class method gets this exact recipe
+        recipe_info = Recipe.get_recipe_info(id_of_recipe)
+
+        self.assertEqual(recipe_info[0], 'Stilton Balsamic Pizza')
         
 
 
