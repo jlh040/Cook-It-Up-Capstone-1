@@ -89,6 +89,7 @@ class ViewsTestCase(TestCase):
             resp = c.post('/recipes', data={'recipe_name': 'brownie', 'num_of_cals': 199})
             html = resp.get_data(as_text=True)
 
+            self.assertEqual(resp.status_code, 200)
             self.assertIn('Brownie', html)
     
     def test_cant_search_recipes_logged_out(self):
@@ -99,6 +100,7 @@ class ViewsTestCase(TestCase):
 
             resp = c.post('/recipes', data={'recipe_name': 'chicken', 'num_of_cals': 399}, follow_redirects=True)
             html = resp.get_data(as_text=True)
+            self.assertEqual(resp.status_code, 200)
             self.assertIn('Unauthorized to view this', html)     
 
     def test_see_recipe_page_logged_in(self):
@@ -110,7 +112,21 @@ class ViewsTestCase(TestCase):
             resp = c.get('/recipes/663822')
             html = resp.get_data(as_text=True)
 
+            self.assertEqual(resp.status_code, 200)
             self.assertIn('Trinidad Callaloo Soup', html)
+    
+    def test_not_see_recipe_page_logged_out(self):
+        """Are we restricted from seeing a recipe's page when logged out?"""
+        with self.client as c:
+            resp = c.get('/recipes/663822')
+            self.assertEqual(resp.status_code, 302)
+
+            resp = c.get('/recipes/663822', follow_redirects=True)
+            html = resp.get_data(as_text=True)
+            self.assertIn('Unauthorized to view this', html)
+
+
+
 
 
 
