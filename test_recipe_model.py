@@ -66,13 +66,26 @@ class RecipeModelTestCase(TestCase):
         and that it returns appropriate dishes."""
         list_of_recipes = Recipe.get_recipes_by_cuisine('Italian')
         for id, title in list_of_recipes:
-            # Do we get Italian food?
             if 'Italian' in title:
+                # If we see this passing test, we know we are getting italian cuisine
                 self.assertTrue(True)
-                break
-            else:
-                # If we see this failing test, no italian foods were returned
-                self.assertTrue(1, 2)
+        
+        
+    def test_get_recipes_by_query_and_cals(self):
+        """Is the get_recipes_by_query_and_cals method functional?"""
+        # Get an Italian dish with < 100 cals.
+        id_of_low_cal_ital_dish = 637513
+        low_cal_ital_dish = Recipe.get_recipe_info(id_of_low_cal_ital_dish)
+
+        # Get a list of italian dishes with less than 100 cals
+        list_of_recipes = Recipe.get_recipes_by_query_and_cals('italian', 100)
+
+        # Check that our Italian dish shows up in this list
+        for id, title in list_of_recipes:
+            if title == low_cal_ital_dish[0]:
+                # If we see this passing test, our dish was found in the list
+                self.assertTrue(True)
+        
 
 
 
