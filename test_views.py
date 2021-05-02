@@ -64,6 +64,16 @@ class ViewsTestCase(TestCase):
         html = resp.get_data(as_text=True)
 
         self.assertIn('Knekkebrød', html)
+    
+    def not_see_cuisines_logged_out(self):
+        """Are we not allowsed to view cuisines when logged out?"""
+        with self.client as c:
+            resp = c.get('/cuisines/Nordic')
+            html = resp.get_data(as_text=True)
+
+            self.assertIn('<p>Log in or make an account to view this</p>', html)
+
+
 
 
 
