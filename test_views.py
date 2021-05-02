@@ -45,6 +45,14 @@ class ViewsTestCase(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertIn('<h1>LOGGED-IN HOMEPAGE</h1>', html)
+    
+    def test_homepage_logged_out(self):
+        """Do we see the anonymous homepage, when logged out?"""
+        with self.client as c:
+            resp = c.get('/')
+            html = resp.get_data(as_text=True)
+
+            self.assertIn('<h1>ANONYMOUS HOMEPAGE</h1>', html)
 
 
 
