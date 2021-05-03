@@ -4,7 +4,7 @@
 
 ### Demographics:
 
-- Professionals age 18+
+- Professionals age 18+ 
 
 ### Motivation
 
