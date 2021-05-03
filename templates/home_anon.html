@@ -6,8 +6,14 @@ Cook It Up. Find Your Inner Chef
 {% endblock %}
 
 {% block content %}
-<h1>ANONYMOUS HOMEPAGE</h1>
-<button><a href="/signup">Sign Up</a></button></br>
-<button><a href="/login">Log In</a></button></br>
-<i class="fas fa-lemon" style="color: green;"></i>
+<div class="container h-100 d-flex align-items-center">
+    <div class="row w-100 mt-5">
+        <div class="col d-flex justify-content-center">
+            <a href="/signup" class="btn btn-lg btn-info  mt-4 ms-3">Sign Up</a>
+            <a href="/login" class="btn btn-lg btn-info mt-4 ms-4">Log In</a>
+        </div>
+    </div>
+</div>
 {% endblock %}
+
+<!-- <i class="fas fa-lemon" style="color: green;"></i>  -->

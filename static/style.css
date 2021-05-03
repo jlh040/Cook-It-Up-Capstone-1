@@ -1,3 +1,7 @@
+body {
+    height: 100vh;
+}
+
 .bg-image { 
     background: url("cook_it_up_logo.png") no-repeat center center fixed; 
     -webkit-background-size: cover;
