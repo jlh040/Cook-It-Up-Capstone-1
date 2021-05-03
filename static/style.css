@@ -9,3 +9,7 @@ body {
     -o-background-size: cover;
     background-size: cover;
   }
+
+  .login-page-color {
+    background: linear-gradient(90deg, rgba(24,198,195,1) 17%, rgba(124,209,203,1) 37%);
+  }

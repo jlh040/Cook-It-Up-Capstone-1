@@ -1,0 +1,12 @@
+{% macro body_background_logo(r) %}
+    {% if (r.endpoint == 'show_homepage') and (not g.user) %}
+        bg-image
+    {% endif %}
+{% endmacro %}
+
+{% macro body_background_color(r) %}
+    {% if r.endpoint == 'login_user' %}
+        login-page-color
+    {% endif %}
+{% endmacro %}
+
