@@ -5,7 +5,7 @@ Find a Dish!
 {% endblock %}
 
 {% block content %}
-<ul>
+<ul class="list-group">
     {% for id, recipe in recipes %}
     <li>
     <a href="{{ url_for('show_recipe_by_id', id=id) }}">{{ recipe }}</a>
