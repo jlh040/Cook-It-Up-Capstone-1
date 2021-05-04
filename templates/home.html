@@ -24,9 +24,20 @@ Cook It Up. Find Your Inner Chef
         </div>
     </form>
 </div>
-<div class="cuisine-container">
-    {% for cuisine in cuisines %}
-        <p><a href="{{ url_for('list_recipes_by_cuisine', cuisine_type=cuisine) }}">{{ cuisine }}</a></p>
-    {% endfor %}
+<div class="container cuisine-container mt-4">
+    <div class="row d-flex justify-content-center">
+        {% for cuisine in cuisines %}
+        <div class="col-4">
+            <div class="card text-dark my-3 bg-warning">
+                <img src="https://images.unsplash.com/photo-1541518763669-27fef04b14ea?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1532&q=80" class="img-fluid card-image-top">
+                <div class="card-body">
+                  <h5 class="card-title">{{ cuisine }}</h5>
+                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                  <a href="{{ url_for('list_recipes_by_cuisine', cuisine_type=cuisine) }}" class="card-link">{{ cuisine }} Foods</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
