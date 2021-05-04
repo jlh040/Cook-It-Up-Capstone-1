@@ -5,9 +5,9 @@ from unittest import TestCase
 from secret_keys import API_KEY
 from models import db, User, Recipe, UserRecipe
 
-os.environ['DATABASE_URL'] = 'postgresql:///cook-it-up-test-db'
-
 from app import app
+
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///cook-it-up-test-db"
 
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['TESTING'] = True
@@ -48,7 +48,7 @@ class RecipeModelTestCase(TestCase):
         db.session.add(new_recipe3)
         db.session.commit()
 
-        self.assertIs(new_recipe3, Recipe.query.get(new_recipe3.id))
+        self.assertIs(new_recipe3, Recipe.query.get(new_recipe3.api_id))
     
     def test_recipe_representation(self):
         """Does our repr method work for the recipe class?"""
@@ -57,7 +57,7 @@ class RecipeModelTestCase(TestCase):
         db.session.add(new_recipe4)
         db.session.commit()
 
-        self.assertIn(f'api_id: {new_recipe4.api_id}', str(Recipe.query.get(new_recipe4.id)))
+        self.assertIn(f'api_id: {new_recipe4.api_id}', str(Recipe.query.get(new_recipe4.api_id)))
     
     def test_get_recipes_by_cuisine(self):
         """Test that the get_recipes_by_cuisine method is functional
@@ -79,7 +79,7 @@ class RecipeModelTestCase(TestCase):
         list_of_recipes = Recipe.get_recipes_by_query_and_cals('italian', 100)
 
         # Check that our Italian dish shows up in this list
-        for id, title in list_of_recipes:
+        for id, title, cal in list_of_recipes:
             if title == low_cal_ital_dish[0]:
                 # If we see this passing test, our dish was found in the list
                 self.assertTrue(True)

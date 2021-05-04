@@ -5,9 +5,9 @@ from models import db, User, Recipe
 from secret_keys import API_KEY
 import os
 
-os.environ['DATABASE_URL'] = 'postgresql:///cook-it-up-test-db'
-
 from app import app, CURR_USER_KEY
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///cook-it-up-test-db'
 
 app.config['TESTING'] = True
 app.config['WTF_CSRF_ENABLED'] = False
@@ -43,7 +43,7 @@ class ViewsTestCase(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn('<h1>LOGGED-IN HOMEPAGE</h1>', html)
+            self.assertIn('list_recipes_by_query', html)
     
     def test_homepage_logged_out(self):
         """Do we see the anonymous homepage, when logged out?"""
@@ -52,7 +52,7 @@ class ViewsTestCase(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn('<h1>ANONYMOUS HOMEPAGE</h1>', html)
+            self.assertIn('Sign Up', html)
     
     def test_see_cuisines_logged_in(self):
         """Can we search for a list of cuisines, when logged in?"""
@@ -153,7 +153,7 @@ class ViewsTestCase(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn('<h1>Login</h1>', html)
+            self.assertIn('Log in to Cook It Up', html)
     
     def test_login_user(self):
         """Is a user able to login?"""
@@ -164,7 +164,7 @@ class ViewsTestCase(TestCase):
             resp = c.post('/login', data={'username': 'some_guy87', 'password': 'redrobbin87231'}, follow_redirects=True)
             html = resp.get_data(as_text = True)
             self.assertEqual(resp.status_code, 200)
-            self.assertIn('You logged in!', html)
+            self.assertIn('Welcome back', html)
     
     def test_logout_user(self):
         """Is a user able to logout?"""
@@ -172,13 +172,13 @@ class ViewsTestCase(TestCase):
             with c.session_transaction() as sess:
                 sess[CURR_USER_KEY] = self.test_user.id
             
-            resp = c.get('/logout', follow_redirects=True)
+            resp = c.post('/logout', follow_redirects=True)
             html = resp.get_data(as_text=True)
-            self.assertIn('ANONYMOUS HOMEPAGE', html)
+            self.assertIn('Sign Up', html)
 
             resp2 = c.get('/')
             html2 = resp2.get_data(as_text=True)
-            self.assertIn('ANONYMOUS HOMEPAGE', html2)
+            self.assertIn('Sign Up', html2)
 
     def test_see_user_page(self):
         """Can a user see their own page when logged in?"""
@@ -190,7 +190,7 @@ class ViewsTestCase(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn('Welcome to your page Django', html)
+            self.assertIn('Chef Django', html)
     
     def test_not_see_user_page_nli(self):
         """Are we restricted from seeing a user's page when not logged in?"""
@@ -299,8 +299,8 @@ class ViewsTestCase(TestCase):
 
             resp = c.post(f'/recipes/{1}/favorite', follow_redirects=True)
             html = resp.get_data(as_text=True)
-            self.assertIn('You favorited this recipe!', html)
+            self.assertIn('Added to favorites!', html)
 
             resp = c.post(f'/recipes/{1}/unfavorite', follow_redirects=True)
             html = resp.get_data(as_text=True)
-            self.assertNotIn('You unfavorited this recipe', html)
+            self.assertIn('Removed from favorites!', html)

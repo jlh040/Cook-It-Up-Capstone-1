@@ -212,7 +212,7 @@ def add_recipe_to_favorites(id):
     if not g.user:
         flash('Not authorized to do this', 'danger')
         return redirect('/')
-    elif id in [obj.id for obj in g.user.favorite_recipes]:
+    elif id in [obj.api_id for obj in g.user.favorite_recipes]:
         flash('You already favorited this recipe', 'danger')
         return redirect(f'/recipes/{id}')
 
@@ -231,7 +231,7 @@ def unfavorite_recipe(id):
     if not g.user:
         flash('Not authorized to do this', 'danger')
         return redirect('/')
-    elif id not in [obj.id for obj in g.user.favorite_recipes]:
+    elif id not in [obj.api_id for obj in g.user.favorite_recipes]:
         flash('You haven\'t favorited this recipe', 'danger')
         return redirect(f'/recipes/{id}')
 

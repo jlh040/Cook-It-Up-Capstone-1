@@ -109,7 +109,7 @@ class UserRecipe(db.Model):
 
     recipe_id = db.Column(
         db.Integer, 
-        db.ForeignKey('recipes.id')
+        db.ForeignKey('recipes.api_id')
     )
 
 class Recipe(db.Model):
@@ -117,21 +117,16 @@ class Recipe(db.Model):
 
     __tablename__ = 'recipes'
 
-    id = db.Column(
-        db.Integer, 
-        autoincrement = True, 
-        primary_key = True
-    )
-
     api_id = db.Column(
         db.Integer, 
-        unique = True, 
-        nullable = False
+        autoincrement = True, 
+        primary_key = True,
+        index = True
     )
 
     def __repr__(self):
         """Create a representation of a recipe."""
-        return f'<id: {self.id}, api_id: {self.api_id}>'
+        return f'<api_id: {self.api_id}>'
     
     @classmethod
     def get_recipes_by_cuisine(cls, cuisine_name):

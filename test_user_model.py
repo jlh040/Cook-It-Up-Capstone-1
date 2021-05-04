@@ -5,14 +5,15 @@ from unittest import TestCase
 from models import db, User, Recipe, UserRecipe
 from secret_keys import API_KEY
 
-os.environ['DATABASE_URL'] = 'postgresql:///cook-it-up-test-db'
-
 from app import app
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///cook-it-up-test-db'
 
 app.config['TESTING'] = True
 app.config['WTF_CSRF_ENABLED'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 
+db.drop_all()
 db.create_all()
 
 class UserModelTestCase(TestCase):
