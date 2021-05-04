@@ -50,11 +50,11 @@
     </div>
     <div class="row mt-4">
         <div class="col">
-            <h3 class="text-info display-3">Instructions:</h3>
+            <h3 class="text-info display-3 text-center">Instructions:</h3>
             <ul class="list-group">
                 {% for num, step in recipe_inst %}
                 <li class="list-group-item">
-                    {{ num }} {{ step }}
+                    {{ num }} - {{ step }}
                 </li>
                 {% endfor %}
             </ul>
