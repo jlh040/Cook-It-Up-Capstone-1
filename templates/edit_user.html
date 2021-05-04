@@ -5,14 +5,18 @@ Edit Your Information
 {% endblock %}
 
 {% block content %}
-<form action="/users/{{ user.id }}/edit" method="POST">
-    {{ form.hidden_tag() }}
-
-    {% for field in form if field.widget.input_type != 'hidden' %}
-        {{ field.label }}
-        {{ field }}
-    {% endfor %}
-    <button>Submit</button>
-</form>
-<a href="/users/{{ user.id }}"><button>Go back</button></a>
+<div class="container mt-3">
+    <form action="/users/{{ user.id }}/edit" method="POST">
+        {{ form.hidden_tag() }}
+        {% for field in form if field.widget.input_type != 'hidden' %}
+        <div class="mb-3">
+            {{ field.label(class_="form-label fs-2") }}
+            {{ field(class_="form-control") }}
+        </div>
+        {% endfor %}
+        <button class="btn btn-lg btn-outline-primary mt-3">Submit</button>
+        <a href="/users/{{ user.id }}" class="btn btn-lg btn-outline-info mt-3 ms-3">Go back</a>
+        
+    </form>
+</div>
 {% endblock %}

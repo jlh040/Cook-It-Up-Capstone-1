@@ -15,21 +15,21 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item fw-bold">Username: <span class="fw-normal">{{ user.username }}</span></li>
                 <li class="list-group-item fw-bold">Email: <span class="fw-normal">{{ user.email }}</span></li>
-                <li class="list-group-item fw-bold">First_name: <span class="fw-normal">{{ user.first_name }}</span></li>
-                <li class="list-group-item fw-bold">Last_name: <span class="fw-normal">{{ user.last_name }}</span></li>
+                <li class="list-group-item fw-bold">First Name: <span class="fw-normal">{{ user.first_name }}</span></li>
+                <li class="list-group-item fw-bold">Last Name: <span class="fw-normal">{{ user.last_name }}</span></li>
             </ul>
             <div class="card-body">
                 <h4 class="card-title text-center">Favorite Recipes:</h4>
                 {% for id, title, image in recipes %}
                 <a href="/recipes/{{ id }}" class="card-link">{{ title }}</a>
                 {% endfor %}
-            </ul>
+            </div>
         </div>
     </div>
 </div>
 <div class="row mt-4">
     <div class="col d-flex justify-content-center">
-        <a href="/users/{{ user.id }}/edit" class="link-dark fs-3">Edit Info</a>
+        <a href="/users/{{ user.id }}/edit" class="fs-5 text-decoration-none">Edit Profile</a>
     </div>
 </div>
 {% endblock %}
