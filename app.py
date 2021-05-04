@@ -55,7 +55,7 @@ def list_recipes_by_cuisine(cuisine_type):
 
         return render_template('recipes_by_cuisine.html', recipes=recipes, cuisine_type=cuisine_type)
     else:
-        flash('Log in or make an account to view this')
+        flash('Log in or make an account to view this', 'danger')
         return redirect('/')
 
 @app.route('/recipes', methods=['GET', 'POST'])
@@ -66,7 +66,7 @@ def list_recipes_by_query():
     form = SearchForm()
 
     if not g.user:
-        flash('Unauthorized to view this')
+        flash('Unauthorized to view this', 'danger')
         return redirect('/')
 
     if form.validate_on_submit():
@@ -81,7 +81,7 @@ def list_recipes_by_query():
         # Pass the recipes into the template to display to the user
         return render_template('recipes_by_query.html', recipes=recipes)
     else:
-        flash('Enter a search term first')
+        flash('Enter a search term first', 'info')
         return redirect('/')
     
     
@@ -91,7 +91,7 @@ def show_recipe_by_id(id):
     """Show a recipe's nformation."""
 
     if not g.user:
-        flash('Unauthorized to view this')
+        flash('Unauthorized to view this', 'danger')
         return redirect('/')
 
     # Get the title, image, and ingredients
@@ -129,10 +129,10 @@ def user_signup():
         db.session.commit()
         session[CURR_USER_KEY] = user.id
 
-        flash('You successfully signed up!')
+        flash('You successfully signed up!', 'success')
         return redirect('/')
     elif not form.validate_on_submit() and request.method == 'POST':
-        flash('Please enter a valid email')
+        flash('Please enter a valid email', 'danger')
 
     return render_template('signup.html', form=form)
 
@@ -146,12 +146,13 @@ def login_user():
 
         if user:
             session[CURR_USER_KEY] = user.id
-            flash('You logged in!')
+            flash('Welcome back', 'success')
             return redirect('/')
         else:
-            form.username.errors = ['Bad username/password']
+            flash('Invalid credentials!', 'danger')
+            return redirect('/login')
     elif not form.validate_on_submit() and request.method == 'POST':
-        flash('Please signup from the website')
+        flash('Not authorized to do this', 'danger')
 
     return render_template('login.html', form=form)
 
@@ -166,10 +167,10 @@ def show_users_page(id):
     """Go to the user's page."""
     # Make sure the user is authenticated
     if not session.get(CURR_USER_KEY):
-        flash('Not authorized to go here')
+        flash('Not authorized to go here', 'danger')
         return redirect('/')
     elif session.get(CURR_USER_KEY) != id:
-        flash('Not authorized to view this')
+        flash('Not authorized to view this', 'danger')
         return redirect('/')
     
     # Get the user's favorite recipes
@@ -182,7 +183,7 @@ def edit_user(id):
     """Edit a user's information."""
 
     if not g.user or not g.user.id == id:
-        flash('Not authorized to view this page')
+        flash('Not authorized to view this page', 'danger')
         return redirect('/')
 
     user = User.query.get(id)
@@ -192,10 +193,10 @@ def edit_user(id):
         form.populate_obj(user)
         db.session.add(user)
         db.session.commit()
-        flash('Edit Successful!')
+        flash('Edit Successful!', 'success')
         return redirect(f'/users/{id}')
     elif not form.validate_on_submit() and request.method == 'POST':
-        flash('Please enter valid information')
+        flash('Please enter valid information', 'danger')
         return redirect(f'/users/{id}/edit')
 
     return render_template('edit_user.html', user=user, form=form)
@@ -205,10 +206,10 @@ def add_recipe_to_favorites(id):
     """Add a recipe to a user's favorites."""
 
     if not g.user:
-        flash('Not authorized to do this')
+        flash('Not authorized to do this', 'danger')
         return redirect('/')
     elif id in [obj.id for obj in g.user.favorite_recipes]:
-        flash('You already favorited this recipe')
+        flash('You already favorited this recipe', 'danger')
         return redirect(f'/recipes/{id}')
 
     recipe = Recipe.query.filter_by(api_id=id).one()
@@ -216,7 +217,7 @@ def add_recipe_to_favorites(id):
 
     db.session.commit()
 
-    flash('You favorited this recipe!')
+    flash('Added to favorites!', 'success')
     return redirect(f'/recipes/{id}')
 
 @app.route('/recipes/<int:id>/unfavorite', methods=['POST'])
@@ -224,15 +225,15 @@ def unfavorite_recipe(id):
     """Remove this recipe from a user's favorites."""
 
     if not g.user:
-        flash('Not authorized to do this')
+        flash('Not authorized to do this', 'danger')
         return redirect('/')
     elif id not in [obj.id for obj in g.user.favorite_recipes]:
-        flash('You haven\'t favorited this recipe')
+        flash('You haven\'t favorited this recipe', 'danger')
         return redirect(f'/recipes/{id}')
 
     fav_recipe = Recipe.query.get(id)
     g.user.favorite_recipes.remove(fav_recipe)
     db.session.commit()
 
-    flash('You unfavorited this recipe')
+    flash('Removed from favorites!', 'info')
     return redirect(f'/recipes/{id}')
