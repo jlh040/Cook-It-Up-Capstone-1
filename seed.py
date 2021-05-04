@@ -2,7 +2,7 @@ from app import app
 from models import db, User, Recipe, UserRecipe
 
 def fill_recipe_table():
-    for num in range(1, 2000000):
+    for num in range(1, ):
         recipe = Recipe(api_id=num)
         db.session.add(recipe)
     db.session.commit()
