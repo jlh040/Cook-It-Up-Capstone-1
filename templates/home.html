@@ -12,8 +12,13 @@ Cook It Up. Find Your Inner Chef
         <div class="row">
             {% for field in form if field.widget.input_type != 'hidden' %}
             <div class="col">
-                {{ field.label(class_="form-label") }}
-                {{ field(class="form-control") }}
+                {% if 'select' in field() %}
+                    {{ field.label(class_="form-label") }}
+                    {{ field(class_="form-select") }}
+                {% else %}
+                    {{ field.label(class_="form-label") }}
+                    {{ field(class="form-control") }}
+                {% endif %}
             </div>
             {% endfor %}
         <div class="row">

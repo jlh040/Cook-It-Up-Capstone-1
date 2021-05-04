@@ -3,7 +3,7 @@ function randomRGB() {
     let green = Math.floor(Math.random() * 256);
     let blue = Math.floor(Math.random() * 256);
 
-    return `rgb(${red}, ${green}, ${blue})`
+    return `rgb(150, ${green}, ${blue})`
 }
 
 const $cuisineCard = $('.cuisine-card');
