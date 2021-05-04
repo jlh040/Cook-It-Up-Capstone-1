@@ -1,6 +1,7 @@
 from math import floor
 from secret_keys import API_KEY
 import requests
+import os
 
 list_of_cuisines = [
             'African',
@@ -84,4 +85,11 @@ def get_ingredients_from_recipe(resp):
 def check_for_no_image(form):
     if form.image_url.data == '':
         form.image_url.data = None
+
+def heroku_db_url():
+    """Adds the 'ql' to 'postgres' so the app will run on Heroku."""
+    if os.environ.get('DATABASE_URL'):
+        return 'postgresql' + os.environ.get('DATABASE_URL')[8:]
+    else:
+        return 'postgresql:///cook-it-up-db'
 

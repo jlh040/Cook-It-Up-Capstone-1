@@ -3,7 +3,7 @@ from models import db, connect_db, User, Recipe
 from forms import SignupForm, LoginForm, EditUserForm, SearchForm
 from flask_debugtoolbar import DebugToolbarExtension
 from secret_keys import API_KEY, SECRET_KEY
-from helper_funcs import list_of_cuisines, check_for_no_image
+from helper_funcs import list_of_cuisines, check_for_no_image, heroku_db_url
 
 import requests
 import os
@@ -12,7 +12,7 @@ CURR_USER_KEY = 'curr_user'
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql:///cook-it-up-db')
+app.config['SQLALCHEMY_DATABASE_URI'] = heroku_db_url()
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
