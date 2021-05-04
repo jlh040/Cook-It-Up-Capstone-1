@@ -47,7 +47,7 @@ def make_additional_calls(resp, list_of_recipe_titles, cuisine_name=None, query=
             elif query:
                 addtl_resp = make_request_by_query_and_cals(api_endpoint, query, cals, offset)
             offset += 100
-            list_of_recipe_titles.extend([(obj['id'], obj['title']) for obj in addtl_resp.json()['results']])
+            list_of_recipe_titles.extend([(obj['id'], obj['title'], obj['nutrition']['nutrients'][0]['amount']) for obj in addtl_resp.json()['results']])
         return list_of_recipe_titles
     else:
         return list_of_recipe_titles
