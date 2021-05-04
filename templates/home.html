@@ -5,16 +5,25 @@ Cook It Up. Find Your Inner Chef
 {% endblock %}
 
 {% block content %}
-<h1>LOGGED-IN HOMEPAGE</h1>
-<form action="{{ url_for('list_recipes_by_query') }}" method="POST">
-    {{ form.hidden_tag() }}
-    
-    {% for field in form if field.widget.input_type != 'hidden' %}
-        {{ field.label }}
-        {{ field }}
-    {% endfor %}
-    <button>Search</button>
-</form>
+<div class="mt-5 d-flex justify-content-center">
+    <form action="{{ url_for('list_recipes_by_query') }}" method="POST">
+        {{ form.hidden_tag() }}
+        
+        <div class="row">
+            {% for field in form if field.widget.input_type != 'hidden' %}
+            <div class="col">
+                {{ field.label(class_="form-label") }}
+                {{ field(class="form-control") }}
+            </div>
+            {% endfor %}
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                <button class="btn btn-success mt-3 search-button">Search</button>
+            </div>
+        </div>
+        </div>
+    </form>
+</div>
 <div class="cuisine-container">
     {% for cuisine in cuisines %}
         <p><a href="{{ url_for('list_recipes_by_cuisine', cuisine_type=cuisine) }}">{{ cuisine }}</a></p>

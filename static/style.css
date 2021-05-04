@@ -13,3 +13,7 @@ body {
   .login-page-color {
     background: linear-gradient(313deg, rgba(24,198,195,1) 34%, rgba(4,255,237,1) 90%);
   }
+
+  .search-button {
+      width: 75%;
+  }
