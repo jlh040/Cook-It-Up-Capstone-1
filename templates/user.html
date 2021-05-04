@@ -5,15 +5,31 @@
 {% endblock %}
 
 {% block content %}
-<img src="{{ user.image_url }}" alt="">
-<h1>Welcome to your page {{ user.first_name }}</h1>
-
-<h2>Favorite Recipes:</h2>
-{% for id, title, image in recipes %}
-Title {{ title }}
-<img src="{{ image }}" alt="">
-{% endfor %}
-
-
-<a href="/users/{{ user.id }}/edit">Edit Info</a>
+<div class="row d-flex justify-content-center mt-3">
+    <div class="col-6">
+        <div class="card bg-light shadow">
+            <img src="{{ user.image_url }}" class="card-img-top">
+            <div class="card-body">
+              <h4 class="card-title text-center display-4">Chef {{ user.first_name }}</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item fw-bold">Username: <span class="fw-normal">{{ user.username }}</span></li>
+                <li class="list-group-item fw-bold">Email: <span class="fw-normal">{{ user.email }}</span></li>
+                <li class="list-group-item fw-bold">First_name: <span class="fw-normal">{{ user.first_name }}</span></li>
+                <li class="list-group-item fw-bold">Last_name: <span class="fw-normal">{{ user.last_name }}</span></li>
+            </ul>
+            <div class="card-body">
+                <h4 class="card-title text-center">Favorite Recipes:</h4>
+                {% for id, title, image in recipes %}
+                <a href="/recipes/{{ id }}" class="card-link">{{ title }}</a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col d-flex justify-content-center">
+        <a href="/users/{{ user.id }}/edit" class="link-dark fs-3">Edit Info</a>
+    </div>
+</div>
 {% endblock %}
