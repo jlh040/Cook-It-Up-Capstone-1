@@ -5,39 +5,60 @@
 {% endblock %}
 
 {% block content %}
-<img src="{{ recipe_info[1] }}" alt="">
-<form action="/recipes/{{ id }}/favorite" method="POST">
-    <button>Favorite</button>
-</form>
-<form action="/recipes/{{ id }}/unfavorite" method="POST">
-    <button>Un-favorite</button>
-</form>
-<h1>{{ recipe_info[0] }}</h1>
-
-<h2>Ingredients:</h2>
-<ul>
-{% for ingred in recipe_info[2] %}
-    <li>
-        {{ ingred }}
-    </li>
-{% endfor %}
-</ul>
-
-<h2>Equipment:</h2>
-<ul>
-    {% for tool in recipe_equip %}
-        <li>
-            {{ tool['name'].capitalize() }}
-        </li>
-    {% endfor %}
-</ul>
-
-<h2>Instructions:</h2>
-<ul>
-    {% for num, step in recipe_inst %}
-    <li>
-        {{ num }} {{ step }}
-    </li>
-    {% endfor %}
-</ul>
+<div class="container-fluid">
+    <div class="row d-flex">
+        <div class="col-6">
+            <div class="card">
+                <img src="{{ recipe_info[1] }}" class="card-img-top">
+                <div class="card-body pb-1">
+                    <h5 class="card-title text-center">{{ recipe_info[0] }}</h5>
+                </div>
+                <div class="card-body pt-1">
+                    <form action="/recipes/{{ id }}/favorite" class="mt-2 recipe-page-button d-block" method="POST">
+                        <button class="btn btn-outline-success w-100">Favorite</button>
+                    </form>
+                    <form action="/recipes/{{ id }}/unfavorite" class="mt-2 recipe-page-button d-block" method="POST">
+                        <button class="btn btn-outline-danger w-100">Unfavorite</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Ingredients</h5>
+                </div>
+                <ul class="list-group">
+                    {% for ingred in recipe_info[2] %}
+                    <li class="list-group-item">{{ ingred }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Equipment</h5>
+                </div>
+                <ul class="list-group">
+                    {% for tool in recipe_equip %}
+                    <li class="list-group-item">{{ tool['name'].capitalize() }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col">
+            <h3 class="text-info display-3">Instructions:</h3>
+            <ul class="list-group">
+                {% for num, step in recipe_inst %}
+                <li class="list-group-item">
+                    {{ num }} {{ step }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}
