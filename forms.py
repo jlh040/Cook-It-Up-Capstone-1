@@ -34,7 +34,7 @@ class SignupForm(FlaskForm):
                             validators=[Optional()])
                             
     email = StringField('Email:', 
-                            validators=[Email()])
+                            validators=[InputRequired(), Email()])
 
 class LoginForm(FlaskForm):
     """Represents a form to log in."""

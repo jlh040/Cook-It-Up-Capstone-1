@@ -5,7 +5,7 @@
 {% endmacro %}
 
 {% macro body_background_color(r) %}
-    {% if r.endpoint == 'login_user' %}
+    {% if r.endpoint == 'login_user' or r.endpoint == 'user_signup' %}
         login-page-color
     {% endif %}
 {% endmacro %}

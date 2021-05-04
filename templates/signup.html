@@ -5,15 +5,30 @@ Signup
 {% endblock %}
 
 {% block content %}
-<h1>Signup Page</h1>
-<form action="/signup" method='POST'>
-    {{ form.hidden_tag() }}
+<div class="container-fluid d-flex justify-content-center align-items-center h-100">
+    <div class="mb-5">
+        <h1 class="text-center mb-4">Create your account</h1>
+        <form action="/signup" method="POST">
+            {{ form.hidden_tag() }}
 
-    {% for field in form if field.widget.input_type != 'hidden' %}
-        {{ field.label }}
-        {{ field }}
-    {% endfor %}
-    <button>Submit</button>
-</form>
-<a href="/"><button>Go Back</button></a>
+            {% for field in form if field.widget.input_type != 'hidden' %}
+                <div class="row mb-3 d-flex justify-content-center">
+                    <div class="col-11">
+                        <div class="form-floating">
+                            {{ field(class_="form-control", placeholder="null") }}
+                            {{ field.label }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="row">
+                <div class="col d-flex justify-content-center">
+                    <button class="btn btn-success mx-3 px-5">Signup</button>
+                    <a href="/" class="btn btn-info mx-3 px-5">Go Back</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
+
