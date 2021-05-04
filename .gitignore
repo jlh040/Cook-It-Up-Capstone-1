@@ -2,3 +2,5 @@ venv/
 .vscode/
 __pycache__/
 secret_keys.py
+Procfile
+runtime.txt
