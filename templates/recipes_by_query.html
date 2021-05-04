@@ -5,11 +5,13 @@ Find a Dish!
 {% endblock %}
 
 {% block content %}
-<ul class="list-group">
-    {% for id, recipe in recipes %}
-    <li>
-    <a href="{{ url_for('show_recipe_by_id', id=id) }}">{{ recipe }}</a>
-    {% endfor %}
-    </li>
-</ul>
+<div class="container mt-3">
+    <h3 class="text-center">Search Term: {{ query }}</h3>
+    <div class="list-group mt-3">
+        {% for id, recipe in recipes %}
+        <a href="{{ url_for('show_recipe_by_id', id=id) }}" class="list-group-item list-group-item-action">{{ recipe }}</a>
+        {% endfor %}
+    </div>
+    <a href="/" class="btn btn-outline-primary mt-3">Go back</a>
+</div>
 {% endblock %}

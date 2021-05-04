@@ -79,7 +79,7 @@ def list_recipes_by_query():
         recipes.sort(key=lambda x: x[1])
 
         # Pass the recipes into the template to display to the user
-        return render_template('recipes_by_query.html', recipes=recipes)
+        return render_template('recipes_by_query.html', recipes=recipes, query=query)
     else:
         flash('Enter a search term first', 'info')
         return redirect('/')
