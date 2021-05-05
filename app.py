@@ -3,7 +3,7 @@ from models import db, connect_db, User, Recipe
 from forms import SignupForm, LoginForm, EditUserForm, SearchForm
 from flask_debugtoolbar import DebugToolbarExtension
 from secret_keys import API_KEY, SECRET_KEY
-from helper_funcs import list_of_cuisines, check_for_no_image, heroku_db_url
+from helper_funcs import list_of_cuisines, check_for_no_image
 
 import requests
 import os
