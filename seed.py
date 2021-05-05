@@ -6,7 +6,6 @@ def fill_recipe_table():
         recipe = Recipe(api_id=num)
         db.session.add(recipe)
 
-db.drop_all()
 db.create_all()
 
 fill_recipe_table()
